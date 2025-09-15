@@ -16,12 +16,12 @@ const dataFilePath = path.join(process.cwd(), 'src/data/gemelos.json');
 // PUT - Actualizar gemelo
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const body = await request.json();
     const { titulo, descripcion, iframe, ubicacion } = body;
-    const { id } = params;
+    const { id } = await params;
 
     // Validaciones básicas
     if (!titulo || !descripcion || !iframe) {
@@ -60,10 +60,10 @@ export async function PUT(
 // DELETE - Eliminar gemelo
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id } = params;
+    const { id } = await params;
 
     // Leer datos actuales
     const data = fs.readFileSync(dataFilePath, 'utf8');
