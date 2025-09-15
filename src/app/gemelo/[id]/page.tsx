@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import Link from 'next/link';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import MatterportViewer from '@/components/MatterportViewer';
@@ -39,7 +38,7 @@ export default function GemeloPage() {
       } else {
         setError('Gemelo digital no encontrado');
       }
-    } catch (err) {
+    } catch {
       setError('Error al cargar el gemelo digital');
     } finally {
       setIsLoading(false);

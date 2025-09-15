@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Save, X, Plus, Edit, Trash2, Eye } from 'lucide-react';
+import { Save, X, Edit, Trash2 } from 'lucide-react';
 import { GemeloDigital } from '@/data/gemelos';
 
 interface AdminFormProps {
@@ -78,7 +78,7 @@ export default function AdminForm({ gemelos, onRefresh }: AdminFormProps) {
       } else {
         setError(data.error || 'Error al guardar el proyecto');
       }
-    } catch (error) {
+    } catch {
       setError('Error de conexión');
     } finally {
       setIsLoading(false);
@@ -110,7 +110,7 @@ export default function AdminForm({ gemelos, onRefresh }: AdminFormProps) {
       } else {
         setError(data.error || 'Error al eliminar el proyecto');
       }
-    } catch (error) {
+    } catch {
       setError('Error de conexión');
     } finally {
       setIsLoading(false);

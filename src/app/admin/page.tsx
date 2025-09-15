@@ -25,7 +25,7 @@ export default function AdminPage() {
         credentials: 'include'
       });
       setIsAuthenticated(response.ok);
-    } catch (error) {
+    } catch {
       setIsAuthenticated(false);
     } finally {
       setIsLoading(false);
@@ -37,8 +37,8 @@ export default function AdminPage() {
       const response = await fetch('/api/gemelos');
       const data = await response.json();
       setGemelos(data.gemelos || []);
-    } catch (error) {
-      console.error('Error al cargar gemelos:', error);
+    } catch {
+      console.error('Error al cargar gemelos');
     }
   };
 
@@ -51,8 +51,8 @@ export default function AdminPage() {
       await fetch('/api/auth/logout', { method: 'POST' });
       setIsAuthenticated(false);
       router.push('/');
-    } catch (error) {
-      console.error('Error al cerrar sesión:', error);
+    } catch {
+      console.error('Error al cerrar sesión');
     }
   };
 

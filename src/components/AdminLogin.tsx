@@ -34,7 +34,7 @@ export default function AdminLogin({ onLogin }: AdminLoginProps) {
       } else {
         setError(data.error || 'Error en la autenticación');
       }
-    } catch (error) {
+    } catch {
       setError('Error de conexión');
     } finally {
       setIsLoading(false);

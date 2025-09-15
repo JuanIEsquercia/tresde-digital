@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
     } else {
       return NextResponse.json({ error: 'Contraseña incorrecta' }, { status: 401 });
     }
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Error en la autenticación' }, { status: 500 });
   }
 }
