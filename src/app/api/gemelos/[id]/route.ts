@@ -2,6 +2,15 @@ import { NextRequest, NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
 
+interface GemeloDigital {
+  id: string;
+  titulo: string;
+  descripcion: string;
+  iframe: string;
+  fecha: string;
+  ubicacion?: string;
+}
+
 const dataFilePath = path.join(process.cwd(), 'src/data/gemelos.json');
 
 // PUT - Actualizar gemelo
@@ -24,7 +33,7 @@ export async function PUT(
     const jsonData = JSON.parse(data);
 
     // Encontrar y actualizar el gemelo
-    const gemeloIndex = jsonData.gemelos.findIndex((gemelo: any) => gemelo.id === id);
+    const gemeloIndex = jsonData.gemelos.findIndex((gemelo: GemeloDigital) => gemelo.id === id);
     
     if (gemeloIndex === -1) {
       return NextResponse.json({ error: 'Gemelo no encontrado' }, { status: 404 });
@@ -43,7 +52,7 @@ export async function PUT(
     fs.writeFileSync(dataFilePath, JSON.stringify(jsonData, null, 2));
 
     return NextResponse.json({ success: true, gemelo: jsonData.gemelos[gemeloIndex] });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Error al actualizar el gemelo' }, { status: 500 });
   }
 }
@@ -61,7 +70,7 @@ export async function DELETE(
     const jsonData = JSON.parse(data);
 
     // Encontrar y eliminar el gemelo
-    const gemeloIndex = jsonData.gemelos.findIndex((gemelo: any) => gemelo.id === id);
+    const gemeloIndex = jsonData.gemelos.findIndex((gemelo: GemeloDigital) => gemelo.id === id);
     
     if (gemeloIndex === -1) {
       return NextResponse.json({ error: 'Gemelo no encontrado' }, { status: 404 });
@@ -74,7 +83,7 @@ export async function DELETE(
     fs.writeFileSync(dataFilePath, JSON.stringify(jsonData, null, 2));
 
     return NextResponse.json({ success: true });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Error al eliminar el gemelo' }, { status: 500 });
   }
 }

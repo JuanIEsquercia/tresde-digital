@@ -15,7 +15,7 @@ export async function GET() {
     response.headers.set('Cache-Control', 'public, max-age=60, stale-while-revalidate=300');
     
     return response;
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Error al leer los datos' }, { status: 500 });
   }
 }
@@ -52,7 +52,7 @@ export async function POST(request: NextRequest) {
     fs.writeFileSync(dataFilePath, JSON.stringify(jsonData, null, 2));
 
     return NextResponse.json({ success: true, gemelo: nuevoGemelo });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Error al crear el gemelo' }, { status: 500 });
   }
 }

@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Link from 'next/link';
 import GemeloCard from './GemeloCard';
 import { useGemelos } from '@/hooks/useGemelos';
 
@@ -61,12 +62,12 @@ export default function PortfolioGrid() {
               >
                 Solicitar Cotización
               </a>
-              <a
+              <Link
                 href="/"
                 className="inline-flex items-center px-8 py-3 border-2 border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors duration-200 font-medium"
               >
                 Volver al Inicio
-              </a>
+              </Link>
             </div>
           </div>
         </motion.div>

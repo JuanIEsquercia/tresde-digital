@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { Menu, X } from 'lucide-react';
 
 export default function Header() {
@@ -16,11 +17,11 @@ export default function Header() {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <a href="/" className="block">
+            <Link href="/" className="block">
               <h1 className="text-xl font-bold text-gray-900 hover:text-blue-600 transition-colors duration-200">
                 TresDe Digital
               </h1>
-            </a>
+            </Link>
           </div>
 
           {/* Desktop Navigation */}
@@ -32,12 +33,12 @@ export default function Header() {
               >
                 Inicio
               </a>
-              <a
+              <Link
                 href="/portfolio"
                 className="text-gray-900 hover:text-blue-600 transition-colors duration-200 font-medium"
               >
                 Portfolio
-              </a>
+              </Link>
               <a
                 href="#contacto"
                 className="text-gray-900 hover:text-blue-600 transition-colors duration-200 font-medium"
@@ -69,13 +70,13 @@ export default function Header() {
               >
                 Inicio
               </a>
-              <a
+              <Link
                 href="/portfolio"
                 className="block px-3 py-2 text-gray-900 hover:text-blue-600 transition-colors duration-200 font-medium"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Portfolio
-              </a>
+              </Link>
               <a
                 href="#contacto"
                 className="block px-3 py-2 text-gray-900 hover:text-blue-600 transition-colors duration-200 font-medium"
