@@ -35,7 +35,7 @@ export function useGemelos() {
       
       gemelosCache = data.gemelos || [];
       lastFetch = now;
-      setGemelos(gemelosCache);
+      setGemelos(gemelosCache || []);
       setError(null);
     } catch (err) {
       setError('Error al cargar los datos');
