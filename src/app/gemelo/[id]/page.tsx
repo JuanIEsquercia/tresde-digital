@@ -158,12 +158,12 @@ export default function GemeloPage() {
                 <p className="text-blue-800 text-sm mb-4">
                   Contáctanos para crear el gemelo digital perfecto para tu propiedad.
                 </p>
-                <a
-                  href="/#contacto"
+                <button
+                  onClick={() => router.push('/#contacto')}
                   className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
                 >
                   Solicitar Cotización
-                </a>
+                </button>
               </div>
             </div>
           </div>

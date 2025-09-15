@@ -2,11 +2,13 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import GemeloCard from './GemeloCard';
 import { useGemelos } from '@/hooks/useGemelos';
 
 export default function PortfolioGrid() {
   const { gemelos, isLoading } = useGemelos();
+  const router = useRouter();
   return (
     <section className="py-20 bg-gray-50 min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -56,12 +58,12 @@ export default function PortfolioGrid() {
               para garantizar la máxima calidad y precisión.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a
-                href="/#contacto"
+              <button
+                onClick={() => router.push('/#contacto')}
                 className="inline-flex items-center px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 font-medium"
               >
                 Solicitar Cotización
-              </a>
+              </button>
               <Link
                 href="/"
                 className="inline-flex items-center px-8 py-3 border-2 border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors duration-200 font-medium"
