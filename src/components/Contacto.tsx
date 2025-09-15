@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Phone, Mail, Instagram, Linkedin, MapPin, MessageCircle } from 'lucide-react';
+import { Phone, Mail, Instagram, MapPin, MessageCircle } from 'lucide-react';
 import { datosContacto } from '@/data/gemelos';
 
 export default function Contacto() {
@@ -29,12 +29,6 @@ export default function Contacto() {
       label: 'Instagram',
       value: datosContacto.instagram,
       href: `https://instagram.com/${datosContacto.instagram.replace('@', '')}`
-    },
-    {
-      icon: Linkedin,
-      label: 'LinkedIn',
-      value: 'Perfil Profesional',
-      href: `https://${datosContacto.linkedin}`
     }
   ];
 

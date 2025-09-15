@@ -1,6 +1,8 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { Phone, Mail, Instagram, MessageCircle } from 'lucide-react';
+import { datosContacto } from '@/data/gemelos';
 
 export default function Footer() {
   return (
@@ -48,10 +50,46 @@ export default function Footer() {
             className="space-y-4"
           >
             <h4 className="text-lg font-medium">Contacto</h4>
-            <div className="space-y-2 text-sm text-gray-400">
-              <p>+54 9 11 1234-5678</p>
-              <p>contacto@tresde.com</p>
-              <p>@tresde_digital</p>
+            <div className="space-y-3 text-sm">
+              {/* WhatsApp */}
+              <a
+                href="https://wa.me/543794267780"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center text-gray-400 hover:text-green-400 transition-colors duration-200"
+              >
+                <MessageCircle className="w-4 h-4 mr-2" />
+                {datosContacto.telefono}
+              </a>
+              
+              {/* Teléfono */}
+              <a
+                href={`tel:${datosContacto.telefono}`}
+                className="flex items-center text-gray-400 hover:text-white transition-colors duration-200"
+              >
+                <Phone className="w-4 h-4 mr-2" />
+                {datosContacto.telefono}
+              </a>
+              
+              {/* Email */}
+              <a
+                href={`mailto:${datosContacto.email}`}
+                className="flex items-center text-gray-400 hover:text-white transition-colors duration-200"
+              >
+                <Mail className="w-4 h-4 mr-2" />
+                {datosContacto.email}
+              </a>
+              
+              {/* Instagram */}
+              <a
+                href={`https://instagram.com/${datosContacto.instagram.replace('@', '')}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center text-gray-400 hover:text-pink-400 transition-colors duration-200"
+              >
+                <Instagram className="w-4 h-4 mr-2" />
+                {datosContacto.instagram}
+              </a>
             </div>
           </motion.div>
         </div>
