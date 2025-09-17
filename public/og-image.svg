@@ -1,0 +1,57 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Fondo gradiente elegante -->
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1f2937;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#374151;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1f2937;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:transparent;stop-opacity:0" />
+      <stop offset="50%" style="stop-color:#60a5fa;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:transparent;stop-opacity:0" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Fondo -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  
+  <!-- Patrones decorativos -->
+  <circle cx="200" cy="150" r="100" fill="#3b82f6" opacity="0.1"/>
+  <circle cx="1000" cy="480" r="120" fill="#3b82f6" opacity="0.08"/>
+  <circle cx="600" cy="300" r="80" fill="#60a5fa" opacity="0.05"/>
+  
+  <!-- Línea decorativa superior -->
+  <rect x="400" y="120" width="400" height="2" fill="url(#accent)"/>
+  
+  <!-- Título principal -->
+  <text x="600" y="220" text-anchor="middle" fill="white" font-family="Inter, sans-serif" font-size="72" font-weight="300">
+    Gemelos Digitales
+  </text>
+  
+  <!-- Subtítulo -->
+  <text x="600" y="280" text-anchor="middle" fill="#60a5fa" font-family="Inter, sans-serif" font-size="48" font-weight="600">
+    de Alta Calidad
+  </text>
+  
+  <!-- Línea decorativa inferior -->
+  <rect x="450" y="320" width="300" height="1" fill="url(#accent)" opacity="0.6"/>
+  
+  <!-- Descripción -->
+  <text x="600" y="380" text-anchor="middle" fill="#d1d5db" font-family="Inter, sans-serif" font-size="24" font-weight="300">
+    Transformamos espacios reales en experiencias digitales inmersivas
+  </text>
+  
+  <!-- Ubicación -->
+  <text x="600" y="420" text-anchor="middle" fill="#9ca3af" font-family="Inter, sans-serif" font-size="20" font-weight="400">
+    📍 Corrientes, Argentina
+  </text>
+  
+  <!-- Logo/Marca -->
+  <text x="600" y="520" text-anchor="middle" fill="#60a5fa" font-family="Inter, sans-serif" font-size="32" font-weight="600">
+    TresDe Digital
+  </text>
+  
+  <!-- Línea decorativa final -->
+  <rect x="500" y="550" width="200" height="1" fill="url(#accent)" opacity="0.4"/>
+</svg>
