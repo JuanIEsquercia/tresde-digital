@@ -33,7 +33,7 @@ export default function Contacto() {
   ];
 
   return (
-    <section id="contacto" className="py-20 bg-white">
+    <section id="contacto" className="py-24 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -42,10 +42,13 @@ export default function Contacto() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl sm:text-4xl font-light text-gray-900 mb-4">
-            <span className="font-medium text-blue-600">Contacto</span>
+          {/* Línea decorativa */}
+          <div className="w-16 h-px bg-gradient-to-r from-transparent via-blue-500 to-transparent mb-6 mx-auto"></div>
+          
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-light text-gray-900 mb-6 tracking-tight">
+            <span className="font-semibold text-blue-600 tracking-wide">Contacto</span>
           </h2>
-          <p className="text-lg text-gray-700 max-w-2xl mx-auto">
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed font-light">
             ¿Listo para crear tu gemelo digital? Estamos aquí para ayudarte 
             a transformar tu espacio en una experiencia digital inmersiva.
           </p>
@@ -61,7 +64,7 @@ export default function Contacto() {
             className="space-y-8"
           >
             <div>
-              <h3 className="text-2xl font-semibold text-gray-900 mb-4">
+              <h3 className="text-2xl font-medium text-gray-900 mb-4 tracking-tight">
                 Información de Contacto
               </h3>
               <p className="text-gray-700">
@@ -81,10 +84,10 @@ export default function Contacto() {
                   href={item.href}
                   target={item.href.startsWith('http') ? '_blank' : undefined}
                   rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                  className="flex items-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-200 group"
+                  className="flex items-center p-4 bg-gray-50 rounded-xl hover:bg-white hover:shadow-md transition-all duration-300 group border border-transparent hover:border-blue-100"
                 >
-                  <div className="flex-shrink-0 w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4 group-hover:bg-blue-200 transition-colors duration-200">
-                    <item.icon className="w-5 h-5 text-blue-600" />
+                  <div className="flex-shrink-0 w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mr-4 group-hover:bg-blue-500 group-hover:scale-110 transition-all duration-300 shadow-sm">
+                    <item.icon className="w-5 h-5 text-blue-600 group-hover:text-white transition-colors duration-300" />
                   </div>
                   <div>
                     <p className="font-medium text-gray-900">{item.label}</p>
@@ -104,10 +107,10 @@ export default function Contacto() {
             className="bg-white border border-gray-200 rounded-lg p-8"
           >
             <div className="text-center mb-6">
-              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <MapPin className="w-8 h-8 text-blue-600" />
+              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 hover:bg-blue-500 hover:scale-110 transition-all duration-300 shadow-lg group cursor-pointer">
+                <MapPin className="w-8 h-8 text-blue-600 group-hover:text-white transition-colors duration-300" />
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">
+              <h3 className="text-xl font-medium text-gray-900 mb-2 tracking-tight">
                 Ubicación
               </h3>
               <p className="text-gray-700">

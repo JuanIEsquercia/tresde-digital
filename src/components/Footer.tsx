@@ -6,8 +6,10 @@ import { datosContacto } from '@/data/gemelos';
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-900 text-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <footer className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white relative">
+      {/* Línea decorativa sutil */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-500/30 to-transparent"></div>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full">
           {/* Brand */}
           <motion.div

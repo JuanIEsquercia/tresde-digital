@@ -7,7 +7,7 @@ import { useGemelos } from '@/hooks/useGemelos';
 export default function Portfolio() {
   const { gemelos, isLoading } = useGemelos();
   return (
-    <section id="portfolio" className="py-20 bg-gray-50">
+    <section id="portfolio" className="py-24 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -16,10 +16,13 @@ export default function Portfolio() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl sm:text-4xl font-light text-gray-900 mb-4">
-            Nuestros <span className="font-medium text-blue-600">Proyectos</span>
+          {/* Línea decorativa */}
+          <div className="w-16 h-px bg-gradient-to-r from-transparent via-blue-500 to-transparent mb-6 mx-auto"></div>
+          
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-light text-gray-900 mb-6 tracking-tight">
+            <span className="font-extralight">Nuestros</span> <span className="font-semibold text-blue-600 tracking-wide">Proyectos</span>
           </h2>
-          <p className="text-lg text-gray-700 max-w-2xl mx-auto mb-8">
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-8 leading-relaxed font-light">
             Cada gemelo digital es una experiencia única que captura la esencia 
             y los detalles de cada espacio con precisión profesional.
           </p>
@@ -51,7 +54,7 @@ export default function Portfolio() {
           viewport={{ once: true }}
           className="text-center mt-16"
         >
-          <div className="bg-white border border-gray-200 rounded-lg p-8 max-w-2xl mx-auto shadow-lg">
+          <div className="bg-white/80 backdrop-blur-md border border-gray-100 rounded-xl p-8 max-w-2xl mx-auto shadow-xl hover:shadow-2xl transition-all duration-300">
             <h3 className="text-2xl font-semibold text-gray-900 mb-4">
               ¿Interesado en nuestros servicios?
             </h3>
