@@ -11,8 +11,8 @@ if (!SHEET_ID || !GOOGLE_SERVICE_ACCOUNT_EMAIL || !GOOGLE_PRIVATE_KEY) {
 }
 
 // Configurar autenticación
-let auth: any = null;
-let sheets: any = null;
+let auth: InstanceType<typeof google.auth.GoogleAuth> | null = null;
+let sheets: ReturnType<typeof google.sheets> | null = null;
 
 try {
     auth = new google.auth.GoogleAuth({
@@ -52,7 +52,7 @@ export async function getGemelos(): Promise<GemeloDigital[]> {
     const rows = response.data.values || [];
     
     // Saltar la primera fila (headers) y convertir a objetos
-    return rows.slice(1).map((row: any[]) => ({
+    return rows.slice(1).map((row: string[]) => ({
       id: row[0] || '',
       titulo: row[1] || '',
       descripcion: row[2] || '',
