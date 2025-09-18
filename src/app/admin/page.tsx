@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import AdminLogin from '@/components/AdminLogin';
 import AdminForm from '@/components/AdminForm';
@@ -9,7 +9,6 @@ import { LogOut } from 'lucide-react';
 
 export default function AdminPage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isLoading, setIsLoading] = useState(false); // Cambiar a false para evitar check automático
   const [gemelos, setGemelos] = useState<GemeloDigital[]>([]);
   const router = useRouter();
 
