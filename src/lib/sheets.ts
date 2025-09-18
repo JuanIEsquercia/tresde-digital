@@ -1,7 +1,6 @@
-import { google } from 'googleapis';
-import type { sheets_v4 } from 'googleapis';
+import { google, sheets_v4 } from 'googleapis';
 
-// Configuración de Google Sheets - Usando variables de entorno via next.config.js
+// Configuración de Google Sheets
 const SHEET_ID = process.env.GOOGLE_SHEETS_ID;
 const GOOGLE_SERVICE_ACCOUNT_EMAIL = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
 const GOOGLE_PRIVATE_KEY = process.env.GOOGLE_PRIVATE_KEY;
@@ -16,13 +15,13 @@ let auth: google.auth.GoogleAuth | null = null;
 let sheets: sheets_v4.Sheets | null = null;
 
 try {
-    auth = new google.auth.GoogleAuth({
-      credentials: {
-        client_email: GOOGLE_SERVICE_ACCOUNT_EMAIL,
-        private_key: GOOGLE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
-      },
-      scopes: ['https://www.googleapis.com/auth/spreadsheets'],
-    });
+  auth = new google.auth.GoogleAuth({
+    credentials: {
+      client_email: GOOGLE_SERVICE_ACCOUNT_EMAIL,
+      private_key: GOOGLE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
+    },
+    scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+  });
   
   sheets = google.sheets({ version: 'v4', auth });
 } catch (error) {
@@ -47,7 +46,7 @@ export async function getGemelos(): Promise<GemeloDigital[]> {
 
     const response = await sheets.spreadsheets.values.get({
       spreadsheetId: SHEET_ID,
-      range: 'A:F', // Todas las columnas
+      range: 'A:F',
     });
 
     const rows = response.data.values || [];
@@ -60,7 +59,7 @@ export async function getGemelos(): Promise<GemeloDigital[]> {
       iframe: row[3] || '',
       fecha: row[4] || '',
       ubicacion: row[5] || '',
-    })).filter(gemelo => gemelo.id); // Filtrar filas vacías
+    })).filter(gemelo => gemelo.id);
   } catch (error) {
     console.error('Error al obtener gemelos:', error);
     throw new Error('Error al obtener datos de Google Sheets');
@@ -70,6 +69,10 @@ export async function getGemelos(): Promise<GemeloDigital[]> {
 // Crear nuevo gemelo
 export async function createGemelo(data: Omit<GemeloDigital, 'id' | 'fecha'>): Promise<GemeloDigital> {
   try {
+    if (!sheets || !SHEET_ID) {
+      throw new Error('Google Sheets no configurado correctamente');
+    }
+
     const id = Date.now().toString();
     const fecha = new Date().toISOString().split('T')[0];
     
@@ -79,7 +82,6 @@ export async function createGemelo(data: Omit<GemeloDigital, 'id' | 'fecha'>): P
       ...data,
     };
 
-    // Agregar nueva fila al sheet
     await sheets.spreadsheets.values.append({
       spreadsheetId: SHEET_ID,
       range: 'A:F',
@@ -106,7 +108,10 @@ export async function createGemelo(data: Omit<GemeloDigital, 'id' | 'fecha'>): P
 // Actualizar gemelo existente
 export async function updateGemelo(id: string, data: Partial<GemeloDigital>): Promise<GemeloDigital> {
   try {
-    // Primero, obtener todos los datos para encontrar la fila
+    if (!sheets || !SHEET_ID) {
+      throw new Error('Google Sheets no configurado correctamente');
+    }
+
     const gemelos = await getGemelos();
     const gemeloIndex = gemelos.findIndex(g => g.id === id);
     
@@ -114,10 +119,7 @@ export async function updateGemelo(id: string, data: Partial<GemeloDigital>): Pr
       throw new Error('Gemelo no encontrado');
     }
 
-    // Actualizar el gemelo
     const updatedGemelo = { ...gemelos[gemeloIndex], ...data };
-    
-    // Actualizar la fila en el sheet (fila = index + 2 porque empezamos en fila 2)
     const rowNumber = gemeloIndex + 2;
     
     await sheets.spreadsheets.values.update({
@@ -146,7 +148,10 @@ export async function updateGemelo(id: string, data: Partial<GemeloDigital>): Pr
 // Eliminar gemelo
 export async function deleteGemelo(id: string): Promise<void> {
   try {
-    // Obtener todos los datos para encontrar la fila
+    if (!sheets || !SHEET_ID) {
+      throw new Error('Google Sheets no configurado correctamente');
+    }
+
     const gemelos = await getGemelos();
     const gemeloIndex = gemelos.findIndex(g => g.id === id);
     
@@ -154,7 +159,6 @@ export async function deleteGemelo(id: string): Promise<void> {
       throw new Error('Gemelo no encontrado');
     }
 
-    // Eliminar la fila (fila = index + 2 porque empezamos en fila 2)
     const rowNumber = gemeloIndex + 2;
     
     await sheets.spreadsheets.batchUpdate({
@@ -163,10 +167,10 @@ export async function deleteGemelo(id: string): Promise<void> {
         requests: [{
           deleteDimension: {
             range: {
-              sheetId: 0, // Primera hoja
+              sheetId: 0,
               dimension: 'ROWS',
-              startIndex: rowNumber - 1, // Base 0
-              endIndex: rowNumber, // Base 0
+              startIndex: rowNumber - 1,
+              endIndex: rowNumber,
             },
           },
         }],
