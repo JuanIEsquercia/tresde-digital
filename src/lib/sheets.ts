@@ -1,4 +1,5 @@
 import { google } from 'googleapis';
+import type { sheets_v4 } from 'googleapis';
 
 // Configuración de Google Sheets
 const SHEET_ID = process.env.GOOGLE_SHEETS_ID;
@@ -11,10 +12,8 @@ if (!SHEET_ID || !GOOGLE_SERVICE_ACCOUNT_EMAIL || !GOOGLE_PRIVATE_KEY) {
 }
 
 // Configurar autenticación
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-let auth: any = null;
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-let sheets: any = null;
+let auth: InstanceType<typeof google.auth.GoogleAuth> | null = null;
+let sheets: sheets_v4.Sheets | null = null;
 
 if (SHEET_ID && GOOGLE_SERVICE_ACCOUNT_EMAIL && GOOGLE_PRIVATE_KEY) {
   try {
@@ -56,8 +55,7 @@ export async function getGemelos(): Promise<GemeloDigital[]> {
     const rows = response.data.values || [];
     
     // Saltar la primera fila (headers) y convertir a objetos
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return rows.slice(1).map((row: any[]) => ({
+    return rows.slice(1).map((row: string[]) => ({
       id: row[0] || '',
       titulo: row[1] || '',
       descripcion: row[2] || '',
