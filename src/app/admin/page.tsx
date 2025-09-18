@@ -9,29 +9,11 @@ import { LogOut } from 'lucide-react';
 
 export default function AdminPage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false); // Cambiar a false para evitar check automático
   const [gemelos, setGemelos] = useState<GemeloDigital[]>([]);
   const router = useRouter();
 
-  useEffect(() => {
-    checkAuth();
-    loadGemelos();
-  }, []);
-
-  const checkAuth = async () => {
-    try {
-      const response = await fetch('/api/auth/check', {
-        method: 'GET',
-        credentials: 'include'
-      });
-      setIsAuthenticated(response.ok);
-    } catch {
-      setIsAuthenticated(false);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
+  // Cargar gemelos solo cuando sea necesario
   const loadGemelos = async () => {
     try {
       const response = await fetch('/api/gemelos');
@@ -44,6 +26,8 @@ export default function AdminPage() {
 
   const handleLogin = () => {
     setIsAuthenticated(true);
+    // Cargar gemelos después del login exitoso
+    loadGemelos();
   };
 
   const handleLogout = async () => {
@@ -55,14 +39,6 @@ export default function AdminPage() {
       console.error('Error al cerrar sesión');
     }
   };
-
-  if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-gray-600">Cargando...</div>
-      </div>
-    );
-  }
 
   if (!isAuthenticated) {
     return <AdminLogin onLogin={handleLogin} />;

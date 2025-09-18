@@ -1,14 +1,5 @@
 {
-  "gemelos": [
-    {
-      "id": "1757602296624",
-      "titulo": "Casa Juan",
-      "descripcion": "El proyecto ",
-      "iframe": "<iframe width=\"853\" height=\"480\" src=\"https://my.matterport.com/show/?m=kff3uTMG8XC\" frameborder=\"0\" allowfullscreen allow=\"autoplay; fullscreen; web-share; xr-spatial-tracking;\"></iframe>",
-      "fecha": "2025-09-11",
-      "ubicacion": "San Lorenzo 1547, Corrientes, Argentina"
-    }
-  ],
+  "gemelos": [],
   "contacto": {
     "telefono": "+54 9 3794 267780",
     "email": "jiesquercia@gmail.com",

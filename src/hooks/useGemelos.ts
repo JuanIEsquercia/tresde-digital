@@ -52,6 +52,7 @@ export function useGemelos() {
   const refresh = useCallback(() => {
     gemelosCache = null; // Limpiar cache para forzar recarga
     lastFetch = 0; // Resetear timestamp
+    setGemelos([]); // Limpiar estado local inmediatamente
     loadGemelos();
   }, [loadGemelos]);
 

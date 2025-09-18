@@ -1,17 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
-
-interface GemeloDigital {
-  id: string;
-  titulo: string;
-  descripcion: string;
-  iframe: string;
-  fecha: string;
-  ubicacion?: string;
-}
-
-const dataFilePath = path.join(process.cwd(), 'src/data/gemelos.json');
+import { updateGemelo, deleteGemelo } from '@/lib/sheets';
 
 // PUT - Actualizar gemelo
 export async function PUT(
@@ -28,34 +16,19 @@ export async function PUT(
       return NextResponse.json({ error: 'Faltan campos requeridos' }, { status: 400 });
     }
 
-    // Leer datos actuales
-    const data = fs.readFileSync(dataFilePath, 'utf8');
-    const jsonData = JSON.parse(data);
-
-    // Encontrar y actualizar el gemelo
-    const gemeloIndex = jsonData.gemelos.findIndex((gemelo: GemeloDigital) => gemelo.id === id);
-    
-    if (gemeloIndex === -1) {
-      return NextResponse.json({ error: 'Gemelo no encontrado' }, { status: 404 });
-    }
-
-    // Actualizar datos
-    jsonData.gemelos[gemeloIndex] = {
-      ...jsonData.gemelos[gemeloIndex],
+    // Actualizar en Google Sheets
+    const gemeloActualizado = await updateGemelo(id, {
       titulo,
       descripcion,
       iframe,
       ubicacion: ubicacion || ''
-    };
+    });
 
-    // Guardar archivo
-    fs.writeFileSync(dataFilePath, JSON.stringify(jsonData, null, 2));
-
-    return NextResponse.json({ success: true, gemelo: jsonData.gemelos[gemeloIndex] });
+    return NextResponse.json({ success: true, gemelo: gemeloActualizado });
   } catch (error) {
     console.error('Error al actualizar gemelo:', error);
     return NextResponse.json({ 
-      error: 'Error al actualizar el gemelo. En producción, los datos se almacenan temporalmente.' 
+      error: 'Error al actualizar el gemelo en Google Sheets' 
     }, { status: 500 });
   }
 }
@@ -68,28 +41,14 @@ export async function DELETE(
   try {
     const { id } = await params;
 
-    // Leer datos actuales
-    const data = fs.readFileSync(dataFilePath, 'utf8');
-    const jsonData = JSON.parse(data);
-
-    // Encontrar y eliminar el gemelo
-    const gemeloIndex = jsonData.gemelos.findIndex((gemelo: GemeloDigital) => gemelo.id === id);
-    
-    if (gemeloIndex === -1) {
-      return NextResponse.json({ error: 'Gemelo no encontrado' }, { status: 404 });
-    }
-
-    // Eliminar del array
-    jsonData.gemelos.splice(gemeloIndex, 1);
-
-    // Guardar archivo
-    fs.writeFileSync(dataFilePath, JSON.stringify(jsonData, null, 2));
+    // Eliminar de Google Sheets
+    await deleteGemelo(id);
 
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error('Error al eliminar gemelo:', error);
     return NextResponse.json({ 
-      error: 'Error al eliminar el gemelo. En producción, los datos se almacenan temporalmente.' 
+      error: 'Error al eliminar el gemelo de Google Sheets' 
     }, { status: 500 });
   }
 }

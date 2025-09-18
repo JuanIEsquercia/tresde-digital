@@ -1,22 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
-
-const dataFilePath = path.join(process.cwd(), 'src/data/gemelos.json');
+import { getGemelos, createGemelo } from '@/lib/sheets';
 
 // GET - Obtener todos los gemelos
 export async function GET() {
   try {
-    const data = fs.readFileSync(dataFilePath, 'utf8');
-    const jsonData = JSON.parse(data);
+    const gemelos = await getGemelos();
     
     // Agregar headers de cache para mejor performance
-    const response = NextResponse.json(jsonData);
+    const response = NextResponse.json({ gemelos });
     response.headers.set('Cache-Control', 'public, max-age=60, stale-while-revalidate=300');
     
     return response;
-  } catch {
-    return NextResponse.json({ error: 'Error al leer los datos' }, { status: 500 });
+  } catch (error) {
+    console.error('Error al obtener gemelos:', error);
+    return NextResponse.json({ error: 'Error al leer los datos de Google Sheets' }, { status: 500 });
   }
 }
 
@@ -31,31 +28,19 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Faltan campos requeridos' }, { status: 400 });
     }
 
-    // Leer datos actuales
-    const data = fs.readFileSync(dataFilePath, 'utf8');
-    const jsonData = JSON.parse(data);
-
-    // Crear nuevo gemelo
-    const nuevoGemelo = {
-      id: Date.now().toString(), // ID único basado en timestamp
+    // Crear gemelo en Google Sheets
+    const nuevoGemelo = await createGemelo({
       titulo,
       descripcion,
       iframe,
-      fecha: new Date().toISOString().split('T')[0], // Fecha actual en formato YYYY-MM-DD
       ubicacion: ubicacion || ''
-    };
-
-    // Agregar al array
-    jsonData.gemelos.unshift(nuevoGemelo); // Agregar al inicio
-
-    // Guardar archivo
-    fs.writeFileSync(dataFilePath, JSON.stringify(jsonData, null, 2));
+    });
 
     return NextResponse.json({ success: true, gemelo: nuevoGemelo });
   } catch (error) {
     console.error('Error al crear gemelo:', error);
     return NextResponse.json({ 
-      error: 'Error al crear el gemelo. En producción, los datos se almacenan temporalmente.' 
+      error: 'Error al crear el gemelo en Google Sheets' 
     }, { status: 500 });
   }
 }

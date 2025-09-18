@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 
+
 export async function POST(request: NextRequest) {
   try {
     // Verificar que la variable de entorno esté configurada
