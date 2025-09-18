@@ -20,7 +20,7 @@ export default function AdminPage() {
 
   const checkAuth = async () => {
     try {
-      const response = await fetch('/api/auth/login', {
+      const response = await fetch('/api/auth/check', {
         method: 'GET',
         credentials: 'include'
       });

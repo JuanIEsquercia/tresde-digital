@@ -13,9 +13,12 @@ export const metadata: Metadata = {
   
   // Favicon
   icons: {
-    icon: "/favicon.svg",
-    shortcut: "/favicon.svg",
-    apple: "/favicon.svg",
+    icon: [
+      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/favicon.ico", sizes: "16x16", type: "image/x-icon" }
+    ],
+    shortcut: "/favicon.ico",
+    apple: "/icon.svg",
   },
   
   // Open Graph para redes sociales

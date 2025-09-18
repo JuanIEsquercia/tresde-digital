@@ -52,7 +52,10 @@ export async function POST(request: NextRequest) {
     fs.writeFileSync(dataFilePath, JSON.stringify(jsonData, null, 2));
 
     return NextResponse.json({ success: true, gemelo: nuevoGemelo });
-  } catch {
-    return NextResponse.json({ error: 'Error al crear el gemelo' }, { status: 500 });
+  } catch (error) {
+    console.error('Error al crear gemelo:', error);
+    return NextResponse.json({ 
+      error: 'Error al crear el gemelo. En producción, los datos se almacenan temporalmente.' 
+    }, { status: 500 });
   }
 }

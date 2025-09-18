@@ -1,9 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin123'; // Cambiar en producción
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 
 export async function POST(request: NextRequest) {
   try {
+    // Verificar que la variable de entorno esté configurada
+    if (!ADMIN_PASSWORD) {
+      return NextResponse.json({ 
+        error: 'Configuración del servidor incompleta. Contacta al administrador.' 
+      }, { status: 500 });
+    }
+
     const body = await request.json();
     const { password } = body;
 
@@ -24,3 +31,4 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Error en la autenticación' }, { status: 500 });
   }
 }
+

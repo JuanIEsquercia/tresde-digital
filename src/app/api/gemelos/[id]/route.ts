@@ -52,8 +52,11 @@ export async function PUT(
     fs.writeFileSync(dataFilePath, JSON.stringify(jsonData, null, 2));
 
     return NextResponse.json({ success: true, gemelo: jsonData.gemelos[gemeloIndex] });
-  } catch {
-    return NextResponse.json({ error: 'Error al actualizar el gemelo' }, { status: 500 });
+  } catch (error) {
+    console.error('Error al actualizar gemelo:', error);
+    return NextResponse.json({ 
+      error: 'Error al actualizar el gemelo. En producción, los datos se almacenan temporalmente.' 
+    }, { status: 500 });
   }
 }
 
@@ -83,7 +86,10 @@ export async function DELETE(
     fs.writeFileSync(dataFilePath, JSON.stringify(jsonData, null, 2));
 
     return NextResponse.json({ success: true });
-  } catch {
-    return NextResponse.json({ error: 'Error al eliminar el gemelo' }, { status: 500 });
+  } catch (error) {
+    console.error('Error al eliminar gemelo:', error);
+    return NextResponse.json({ 
+      error: 'Error al eliminar el gemelo. En producción, los datos se almacenan temporalmente.' 
+    }, { status: 500 });
   }
 }
