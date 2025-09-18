@@ -15,18 +15,20 @@ if (!SHEET_ID || !GOOGLE_SERVICE_ACCOUNT_EMAIL || !GOOGLE_PRIVATE_KEY) {
 let auth: InstanceType<typeof google.auth.GoogleAuth> | null = null;
 let sheets: sheets_v4.Sheets | null = null;
 
-try {
-  auth = new google.auth.GoogleAuth({
-    credentials: {
-      client_email: GOOGLE_SERVICE_ACCOUNT_EMAIL,
-      private_key: GOOGLE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
-    },
-    scopes: ['https://www.googleapis.com/auth/spreadsheets'],
-  });
-  
-  sheets = google.sheets({ version: 'v4', auth });
-} catch (error) {
-  console.error('Error al inicializar Google Sheets client:', error);
+if (SHEET_ID && GOOGLE_SERVICE_ACCOUNT_EMAIL && GOOGLE_PRIVATE_KEY) {
+  try {
+    auth = new google.auth.GoogleAuth({
+      credentials: {
+        client_email: GOOGLE_SERVICE_ACCOUNT_EMAIL,
+        private_key: GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n'),
+      },
+      scopes: ['https://www.googleapis.com/auth/spreadsheets'],
+    });
+    
+    sheets = google.sheets({ version: 'v4', auth });
+  } catch (error) {
+    console.error('Error al inicializar Google Sheets client:', error);
+  }
 }
 
 export interface GemeloDigital {
