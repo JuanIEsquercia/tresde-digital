@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getGemelos, createGemelo } from '@/lib/sheets';
+import { getGemelos, createGemelo, GemeloDigital } from '@/lib/sheets';
 
 // Cache en memoria del servidor
-let serverCache: any = null;
+let serverCache: GemeloDigital[] | null = null;
 let serverCacheTime = 0;
 const SERVER_CACHE_DURATION = 300000; // 5 minutos
 
