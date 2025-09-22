@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import WhatsAppButton from "@/components/WhatsAppButton";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 
 export const metadata: Metadata = {
   title: "TresDe Digital - Gemelos Digitales de Alta Calidad",
@@ -62,9 +63,12 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const gaId = process.env.NEXT_PUBLIC_GA_ID;
+
   return (
     <html lang="es">
       <body className="antialiased">
+        {gaId && <GoogleAnalytics gaId={gaId} />}
         {children}
         <WhatsAppButton />
       </body>

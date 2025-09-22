@@ -6,7 +6,7 @@ import { GemeloDigital } from '@/data/gemelos';
 // Cache global para evitar recargas innecesarias
 let gemelosCache: GemeloDigital[] | null = null;
 let lastFetch = 0;
-const CACHE_DURATION = 30000; // 30 segundos
+const CACHE_DURATION = 300000; // 5 minutos
 
 export function useGemelos() {
   const [gemelos, setGemelos] = useState<GemeloDigital[]>(gemelosCache || []);
@@ -26,10 +26,8 @@ export function useGemelos() {
     try {
       setIsLoading(true);
       const response = await fetch('/api/gemelos', {
-        cache: 'no-store', // Asegurar datos frescos
-        headers: {
-          'Cache-Control': 'no-cache'
-        }
+        cache: 'force-cache', // Usar cache del navegador
+        next: { revalidate: 300 } // Revalidar cada 5 minutos
       });
       const data = await response.json();
       

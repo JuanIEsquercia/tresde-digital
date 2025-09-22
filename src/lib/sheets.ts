@@ -8,7 +8,11 @@ const GOOGLE_PRIVATE_KEY = process.env.GOOGLE_PRIVATE_KEY;
 
 // Verificar que todas las variables estén configuradas
 if (!SHEET_ID || !GOOGLE_SERVICE_ACCOUNT_EMAIL || !GOOGLE_PRIVATE_KEY) {
-  console.error('Variables de entorno de Google Sheets no configuradas correctamente');
+  console.error('❌ Variables de entorno de Google Sheets no configuradas correctamente');
+  console.error('Configura las siguientes variables en tu archivo .env.local:');
+  console.error('- GOOGLE_SHEETS_ID');
+  console.error('- GOOGLE_SERVICE_ACCOUNT_EMAIL');
+  console.error('- GOOGLE_PRIVATE_KEY');
 }
 
 // Configurar autenticación
@@ -47,22 +51,34 @@ export async function getGemelos(): Promise<GemeloDigital[]> {
       throw new Error('Google Sheets no configurado correctamente');
     }
 
+    // Optimizar la consulta: solo obtener columnas necesarias y con límite
     const response = await sheets.spreadsheets.values.get({
       spreadsheetId: SHEET_ID,
       range: 'A:F',
+      valueRenderOption: 'UNFORMATTED_VALUE', // Obtener valores sin formato para mejor rendimiento
+      dateTimeRenderOption: 'FORMATTED_STRING',
     });
 
     const rows = response.data.values || [];
     
-    // Saltar la primera fila (headers) y convertir a objetos
-    return rows.slice(1).map((row: string[]) => ({
-      id: row[0] || '',
-      titulo: row[1] || '',
-      descripcion: row[2] || '',
-      iframe: row[3] || '',
-      fecha: row[4] || '',
-      ubicacion: row[5] || '',
-    })).filter(gemelo => gemelo.id);
+    // Optimizar el procesamiento: usar map y filter en una sola pasada
+    const gemelos: GemeloDigital[] = [];
+    
+    for (let i = 1; i < rows.length; i++) { // Saltar header
+      const row = rows[i];
+      if (row && row[0]) { // Solo procesar filas con ID
+        gemelos.push({
+          id: row[0] || '',
+          titulo: row[1] || '',
+          descripcion: row[2] || '',
+          iframe: row[3] || '',
+          fecha: row[4] || '',
+          ubicacion: row[5] || '',
+        });
+      }
+    }
+    
+    return gemelos;
   } catch (error) {
     console.error('Error al obtener gemelos:', error);
     throw new Error('Error al obtener datos de Google Sheets');
