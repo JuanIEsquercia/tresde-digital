@@ -63,12 +63,10 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const gaId = process.env.NEXT_PUBLIC_GA_ID;
-
   return (
     <html lang="es">
       <body className="antialiased">
-        {gaId && <GoogleAnalytics gaId={gaId} />}
+        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID || ''} />
         {children}
         <WhatsAppButton />
       </body>

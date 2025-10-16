@@ -7,6 +7,11 @@ interface GoogleAnalyticsProps {
 }
 
 export default function GoogleAnalytics({ gaId }: GoogleAnalyticsProps) {
+  // No renderizar nada si no hay GA ID
+  if (!gaId || gaId === '') {
+    return null;
+  }
+
   return (
     <>
       <Script
@@ -27,3 +32,4 @@ export default function GoogleAnalytics({ gaId }: GoogleAnalyticsProps) {
     </>
   );
 }
+
