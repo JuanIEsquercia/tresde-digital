@@ -4,9 +4,9 @@ import { getMarcas, createMarca, Marca } from '@/lib/sheets';
 // Cache en memoria del servidor
 let serverCache: Marca[] | null = null;
 let serverCacheTime = 0;
-const SERVER_CACHE_DURATION = 300000; // 5 minutos
+const SERVER_CACHE_DURATION = 300000; // 5 minutos (Google Sheets es estable)
 
-// GET - Obtener todas las marcas
+// GET - Obtener todas las marcas (desde la hoja "Marcas" en Google Sheets)
 export async function GET() {
   try {
     const now = Date.now();
@@ -19,7 +19,7 @@ export async function GET() {
       return response;
     }
     
-    // Obtener datos frescos de Google Sheets
+    // Obtener datos frescos de Google Sheets (hoja "Marcas")
     const marcas = await getMarcas();
     
     // Actualizar cache del servidor
@@ -38,7 +38,7 @@ export async function GET() {
   }
 }
 
-// POST - Crear nueva marca
+// POST - Crear nueva marca (en la hoja "Marcas" separada de los gemelos)
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
@@ -49,7 +49,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Faltan campos requeridos (nombre y logoUrl)' }, { status: 400 });
     }
 
-    // Crear marca en Google Sheets
+    // Crear marca en Google Sheets (hoja "Marcas" - separada de gemelos)
     const nuevaMarca = await createMarca({
       nombre,
       logoUrl,
@@ -64,8 +64,9 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ success: true, marca: nuevaMarca });
   } catch (error) {
     console.error('Error al crear marca:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Error desconocido';
     return NextResponse.json({ 
-      error: 'Error al crear la marca en Google Sheets' 
+      error: `Error al crear la marca en Google Sheets: ${errorMessage}` 
     }, { status: 500 });
   }
 }
