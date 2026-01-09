@@ -13,7 +13,14 @@ export default function MarcasCarousel() {
       try {
         const response = await fetch('/api/marcas');
         const data = await response.json();
-        setMarcas(data.marcas || []);
+        const marcasRaw = data.marcas || [];
+        
+        // Filtrar duplicados por ID (por si acaso vienen duplicados del API)
+        const marcasUnicas = marcasRaw.filter((marca: Marca, index: number, self: Marca[]) => 
+          index === self.findIndex((m: Marca) => m.id === marca.id)
+        );
+        
+        setMarcas(marcasUnicas);
       } catch (error) {
         console.error('Error al cargar marcas:', error);
       } finally {
