@@ -200,3 +200,214 @@ export async function deleteGemelo(id: string): Promise<void> {
     throw new Error('Error al eliminar gemelo de Google Sheets');
   }
 }
+
+// ========== FUNCIONES PARA MARCAS ==========
+
+export interface Marca {
+  id: string;
+  nombre: string;
+  logoUrl: string;
+  url?: string;
+  orden: number;
+  fecha: string;
+}
+
+// Obtener todas las marcas (desde la hoja "Marcas")
+export async function getMarcas(): Promise<Marca[]> {
+  try {
+    if (!sheets || !SHEET_ID) {
+      throw new Error('Google Sheets no configurado correctamente');
+    }
+
+    const response = await sheets.spreadsheets.values.get({
+      spreadsheetId: SHEET_ID,
+      range: 'Marcas!A:F',
+      valueRenderOption: 'UNFORMATTED_VALUE',
+      dateTimeRenderOption: 'FORMATTED_STRING',
+    });
+
+    const rows = response.data.values || [];
+    const marcas: Marca[] = [];
+    
+    for (let i = 1; i < rows.length; i++) { // Saltar header
+      const row = rows[i];
+      if (row && row[0]) { // Solo procesar filas con ID
+        marcas.push({
+          id: row[0] || '',
+          nombre: row[1] || '',
+          logoUrl: row[2] || '',
+          url: row[3] || '',
+          orden: Number(row[4]) || 0,
+          fecha: row[5] || new Date().toISOString().split('T')[0],
+        });
+      }
+    }
+    
+    // Ordenar por el campo orden
+    return marcas.sort((a, b) => a.orden - b.orden);
+  } catch (error) {
+    console.error('Error al obtener marcas:', error);
+    // Si la hoja no existe, retornar array vacío
+    return [];
+  }
+}
+
+// Crear nueva marca
+export async function createMarca(data: Omit<Marca, 'id' | 'fecha'>): Promise<Marca> {
+  try {
+    if (!sheets || !SHEET_ID) {
+      throw new Error('Google Sheets no configurado correctamente');
+    }
+
+    // Verificar si la hoja "Marcas" existe, si no, crearla
+    try {
+      await sheets.spreadsheets.values.get({
+        spreadsheetId: SHEET_ID,
+        range: 'Marcas!A1',
+      });
+    } catch {
+      // Crear la hoja si no existe
+      await sheets.spreadsheets.batchUpdate({
+        spreadsheetId: SHEET_ID,
+        requestBody: {
+          requests: [{
+            addSheet: {
+              properties: {
+                title: 'Marcas',
+                gridProperties: {
+                  rowCount: 1000,
+                  columnCount: 6,
+                },
+              },
+            },
+          }],
+        },
+      });
+      
+      // Agregar headers
+      await sheets.spreadsheets.values.update({
+        spreadsheetId: SHEET_ID,
+        range: 'Marcas!A1:F1',
+        valueInputOption: 'RAW',
+        requestBody: {
+          values: [['ID', 'Nombre', 'Logo URL', 'URL', 'Orden', 'Fecha']],
+        },
+      });
+    }
+
+    const id = Date.now().toString();
+    const fecha = new Date().toISOString().split('T')[0];
+    
+    const nuevaMarca: Marca = {
+      id,
+      fecha,
+      ...data,
+    };
+
+    await sheets.spreadsheets.values.append({
+      spreadsheetId: SHEET_ID,
+      range: 'Marcas!A:F',
+      valueInputOption: 'RAW',
+      requestBody: {
+        values: [[
+          nuevaMarca.id,
+          nuevaMarca.nombre,
+          nuevaMarca.logoUrl,
+          nuevaMarca.url || '',
+          nuevaMarca.orden,
+          nuevaMarca.fecha,
+        ]],
+      },
+    });
+
+    return nuevaMarca;
+  } catch (error) {
+    console.error('Error al crear marca:', error);
+    throw new Error('Error al crear marca en Google Sheets');
+  }
+}
+
+// Actualizar marca existente
+export async function updateMarca(id: string, data: Partial<Marca>): Promise<Marca> {
+  try {
+    if (!sheets || !SHEET_ID) {
+      throw new Error('Google Sheets no configurado correctamente');
+    }
+
+    const marcas = await getMarcas();
+    const marcaIndex = marcas.findIndex(m => m.id === id);
+    
+    if (marcaIndex === -1) {
+      throw new Error('Marca no encontrada');
+    }
+
+    const updatedMarca = { ...marcas[marcaIndex], ...data };
+    const rowNumber = marcaIndex + 2;
+    
+    await sheets.spreadsheets.values.update({
+      spreadsheetId: SHEET_ID,
+      range: `Marcas!A${rowNumber}:F${rowNumber}`,
+      valueInputOption: 'RAW',
+      requestBody: {
+        values: [[
+          updatedMarca.id,
+          updatedMarca.nombre,
+          updatedMarca.logoUrl,
+          updatedMarca.url || '',
+          updatedMarca.orden,
+          updatedMarca.fecha,
+        ]],
+      },
+    });
+
+    return updatedMarca;
+  } catch (error) {
+    console.error('Error al actualizar marca:', error);
+    throw new Error('Error al actualizar marca en Google Sheets');
+  }
+}
+
+// Eliminar marca
+export async function deleteMarca(id: string): Promise<void> {
+  try {
+    if (!sheets || !SHEET_ID) {
+      throw new Error('Google Sheets no configurado correctamente');
+    }
+
+    const marcas = await getMarcas();
+    const marcaIndex = marcas.findIndex(m => m.id === id);
+    
+    if (marcaIndex === -1) {
+      throw new Error('Marca no encontrada');
+    }
+
+    const rowNumber = marcaIndex + 2;
+    
+    // Obtener el sheetId de la hoja "Marcas"
+    const spreadsheet = await sheets.spreadsheets.get({
+      spreadsheetId: SHEET_ID,
+    });
+    
+    const marcasSheet = spreadsheet.data.sheets?.find(s => s.properties?.title === 'Marcas');
+    const sheetId = marcasSheet?.properties?.sheetId || 0;
+    
+    await sheets.spreadsheets.batchUpdate({
+      spreadsheetId: SHEET_ID,
+      requestBody: {
+        requests: [{
+          deleteDimension: {
+            range: {
+              sheetId: sheetId,
+              dimension: 'ROWS',
+              startIndex: rowNumber - 1,
+              endIndex: rowNumber,
+            },
+          },
+        }],
+      },
+    });
+  } catch (error) {
+    console.error('Error al eliminar marca:', error);
+    throw new Error('Error al eliminar marca de Google Sheets');
+  }
+}
