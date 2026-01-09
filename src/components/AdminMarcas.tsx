@@ -23,6 +23,7 @@ export default function AdminMarcas({ marcas, onRefresh }: AdminMarcasProps) {
   const [success, setSuccess] = useState('');
   const [isUploading, setIsUploading] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string>(''); // Separado para vista previa
 
   const resetForm = () => {
     setFormData({
@@ -36,6 +37,7 @@ export default function AdminMarcas({ marcas, onRefresh }: AdminMarcasProps) {
     setError('');
     setSuccess('');
     setSelectedFile(null);
+    setPreviewUrl('');
   };
 
   const handleEdit = (marca: Marca) => {
@@ -49,6 +51,8 @@ export default function AdminMarcas({ marcas, onRefresh }: AdminMarcasProps) {
     setEditingId(marca.id);
     setError('');
     setSuccess('');
+    setSelectedFile(null);
+    setPreviewUrl(marca.logoUrl); // Vista previa del logo actual
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -56,6 +60,20 @@ export default function AdminMarcas({ marcas, onRefresh }: AdminMarcasProps) {
     setIsLoading(true);
     setError('');
     setSuccess('');
+
+    // Validar que logoUrl no sea un data URL (base64)
+    if (formData.logoUrl.startsWith('data:')) {
+      setError('Por favor sube la imagen primero haciendo click en el botón "Subir", o ingresa una URL válida');
+      setIsLoading(false);
+      return;
+    }
+
+    // Validar que logoUrl sea una URL válida
+    if (!formData.logoUrl || (!formData.logoUrl.startsWith('http') && !formData.logoUrl.startsWith('/'))) {
+      setError('Por favor ingresa una URL válida o sube una imagen');
+      setIsLoading(false);
+      return;
+    }
 
     try {
       const url = isEditing 
@@ -139,11 +157,11 @@ export default function AdminMarcas({ marcas, onRefresh }: AdminMarcasProps) {
       setSelectedFile(file);
       setError('');
       
-      // Mostrar vista previa
+      // Mostrar vista previa del archivo seleccionado (NO guardar en logoUrl todavía)
       const reader = new FileReader();
       reader.onload = (e) => {
         const result = e.target?.result as string;
-        setFormData({ ...formData, logoUrl: result });
+        setPreviewUrl(result); // Solo para vista previa, no para guardar
       };
       reader.readAsDataURL(file);
     }
@@ -170,7 +188,9 @@ export default function AdminMarcas({ marcas, onRefresh }: AdminMarcasProps) {
       const data = await response.json();
 
       if (data.success) {
+        // Guardar la URL de Cloudinary/local en logoUrl (NO el data URL)
         setFormData({ ...formData, logoUrl: data.url });
+        setPreviewUrl(data.url); // Actualizar vista previa con la URL real
         setSuccess('Imagen subida correctamente');
         setSelectedFile(null);
         // Limpiar el input file para evitar duplicados
@@ -305,22 +325,32 @@ export default function AdminMarcas({ marcas, onRefresh }: AdminMarcasProps) {
                 required
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 value={formData.logoUrl}
-                onChange={(e) => setFormData({ ...formData, logoUrl: e.target.value })}
+                onChange={(e) => {
+                  const url = e.target.value;
+                  setFormData({ ...formData, logoUrl: url });
+                  // Si es una URL válida (no data URL), actualizar vista previa
+                  if (url && !url.startsWith('data:')) {
+                    setPreviewUrl(url);
+                  }
+                }}
                 placeholder="https://ejemplo.com/logo.png o /marcas/logo.png"
               />
             </div>
             
             <p className="text-xs text-gray-500 mt-1">
-              Puedes subir una imagen desde tu computadora o ingresar una URL. Las imágenes subidas se guardarán en /public/marcas/
+              Puedes subir una imagen desde tu computadora (se subirá a Cloudinary) o ingresar una URL. 
+              {selectedFile && !formData.logoUrl.startsWith('http') && !formData.logoUrl.startsWith('/') && (
+                <span className="text-orange-600 font-medium"> ⚠️ Debes hacer click en "Subir" antes de guardar la marca.</span>
+              )}
             </p>
             
             {/* Vista previa */}
-            {formData.logoUrl && (
+            {(previewUrl || formData.logoUrl) && (
               <div className="mt-3">
                 <p className="text-xs font-medium text-gray-700 mb-1">Vista previa:</p>
                 <div className="w-32 h-32 bg-white border border-gray-200 rounded-lg p-2 flex items-center justify-center">
                   <img
-                    src={formData.logoUrl}
+                    src={previewUrl || formData.logoUrl}
                     alt="Vista previa"
                     className="max-w-full max-h-full object-contain"
                     onError={(e) => {
