@@ -48,9 +48,8 @@ export default function MarcasCarousel() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-8">
           <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
-            Marcas que confían en nosotros
+            Estas marcas confían en nosotros
           </h2>
-          <p className="text-gray-600">Trabajamos con las mejores empresas</p>
         </div>
 
         {marcas.length === 0 ? (
@@ -58,16 +57,11 @@ export default function MarcasCarousel() {
             <p className="text-gray-500">Próximamente agregaremos las marcas con las que trabajamos</p>
           </div>
         ) : (
-          /* Carrusel */
-          <div className="relative overflow-hidden">
+          /* Carrusel infinito */
+          <div className="relative w-full overflow-hidden">
             <div className="flex animate-scroll gap-8 md:gap-12">
-              {/* Primera pasada */}
-              {marcas.map((marca) => (
-                <MarcaItem key={marca.id} marca={marca} />
-              ))}
-              {/* Segunda pasada para efecto infinito */}
-              {marcas.map((marca) => (
-                <MarcaItem key={`${marca.id}-duplicate`} marca={marca} />
+              {marcas.map((marca, index) => (
+                <MarcaItem key={`marca-${index}`} marca={marca} />
               ))}
             </div>
           </div>
@@ -80,13 +74,13 @@ export default function MarcasCarousel() {
             transform: translateX(0);
           }
           100% {
-            transform: translateX(-50%);
+            transform: translateX(calc(-100% - 2rem));
           }
         }
 
         .animate-scroll {
-          animation: scroll 30s linear infinite;
           display: flex;
+          animation: scroll ${Math.max(30, marcas.length * 3)}s linear infinite;
           width: fit-content;
         }
 
