@@ -12,14 +12,14 @@ export const metadata: Metadata = {
   publisher: "TresDe Digital",
   robots: "index, follow",
   
-  // Favicon - Configuración completa para mejor compatibilidad
+  // Favicon - Usando favicon.svg como favicon principal
   icons: {
     icon: [
-      { url: "/favicon.ico", sizes: "any" },
-      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon.ico", sizes: "any" }, // Fallback para navegadores antiguos
     ],
-    shortcut: "/favicon.ico",
-    apple: "/icon.svg",
+    shortcut: "/favicon.svg",
+    apple: "/favicon.svg",
   },
   
   // Open Graph para redes sociales
