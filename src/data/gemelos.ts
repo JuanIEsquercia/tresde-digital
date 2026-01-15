@@ -11,7 +11,7 @@ export const gemelosDigitales: GemeloDigital[] = [
   {
     id: "1",
     titulo: "Casa Moderna - Villa Carlos Paz",
-    descripcion: "Gemelo digital de una casa moderna con diseño contemporáneo, ubicada en Villa Carlos Paz. Incluye todos los espacios interiores y exteriores.",
+    descripcion: "Recorrido virtual 360 de una casa moderna con diseño contemporáneo, ubicada en Villa Carlos Paz. Incluye todos los espacios interiores y exteriores.",
     iframe: "https://my.matterport.com/show/?m=example1",
     fecha: "2024-01-15",
     ubicacion: "Villa Carlos Paz, Córdoba"

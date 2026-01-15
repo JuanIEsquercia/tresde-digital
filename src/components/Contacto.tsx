@@ -49,7 +49,7 @@ export default function Contacto() {
             <span className="font-semibold text-blue-600 tracking-wide">Contacto</span>
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed font-light">
-            ¿Listo para crear tu gemelo digital? Estamos aquí para ayudarte 
+            ¿Listo para crear tu recorrido virtual 360? Estamos aquí para ayudarte 
             a transformar tu espacio en una experiencia digital inmersiva.
           </p>
         </motion.div>
@@ -121,7 +121,7 @@ export default function Contacto() {
 
             <div className="space-y-4 text-center">
               <p className="text-gray-700">
-                Trabajamos con clientes en toda Argentina, creando gemelos digitales 
+                Trabajamos con clientes en toda Argentina, creando recorridos virtuales 360 
                 de alta calidad para diversos tipos de propiedades y espacios.
               </p>
               

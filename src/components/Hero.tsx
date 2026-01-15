@@ -27,7 +27,7 @@ export default function Hero() {
           <div className="w-24 h-px bg-gradient-to-r from-transparent via-blue-400 to-transparent mb-8 mx-auto"></div>
           
           <h1 className="text-4xl sm:text-5xl lg:text-7xl font-light text-white leading-tight tracking-tight">
-            <span className="block font-extralight">Gemelos Digitales</span>
+            <span className="block font-extralight">Recorridos Virtuales 360</span>
             <span className="block text-blue-400 font-semibold tracking-wide mt-2">de Alta Calidad</span>
           </h1>
           
@@ -41,7 +41,7 @@ export default function Hero() {
             className="text-lg sm:text-xl text-gray-200 max-w-3xl mx-auto leading-relaxed font-light tracking-wide"
           >
             Transformamos espacios reales en experiencias digitales inmersivas. 
-            Nuestros gemelos digitales permiten explorar propiedades de manera virtual 
+            Nuestros recorridos virtuales 360 permiten explorar propiedades de manera virtual 
             con la máxima calidad y detalle.
           </motion.p>
 

@@ -36,10 +36,10 @@ export default function GemeloPage() {
       if (gemeloEncontrado) {
         setGemelo(gemeloEncontrado);
       } else {
-        setError('Gemelo digital no encontrado');
+        setError('Recorrido virtual 360 no encontrado');
       }
     } catch {
-      setError('Error al cargar el gemelo digital');
+      setError('Error al cargar el recorrido virtual 360');
     } finally {
       setIsLoading(false);
     }
@@ -52,7 +52,7 @@ export default function GemeloPage() {
         <main className="pt-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
             <div className="text-center">
-              <div className="text-gray-500">Cargando gemelo digital...</div>
+              <div className="text-gray-500">Cargando recorrido virtual 360...</div>
             </div>
           </div>
         </main>
@@ -68,7 +68,7 @@ export default function GemeloPage() {
         <main className="pt-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
             <div className="text-center">
-              <div className="text-red-600 mb-4">{error || 'Gemelo digital no encontrado'}</div>
+              <div className="text-red-600 mb-4">{error || 'Recorrido virtual 360 no encontrado'}</div>
               <button
                 onClick={() => router.push('/portfolio')}
                 className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
@@ -145,7 +145,7 @@ export default function GemeloPage() {
                 Sobre este proyecto
               </h3>
               <p className="text-gray-700 leading-relaxed mb-6">
-                Este gemelo digital fue creado utilizando tecnología Matterport de última generación, 
+                Este recorrido virtual 360 fue creado utilizando tecnología de última generación, 
                 permitiendo una exploración inmersiva y detallada del espacio. Puedes navegar libremente 
                 por el entorno, acercarte a los detalles y experimentar el espacio como si estuvieras 
                 físicamente presente.
@@ -153,10 +153,10 @@ export default function GemeloPage() {
               
               <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
                 <h4 className="font-semibold text-blue-900 mb-2">
-                  ¿Necesitas un gemelo digital para tu proyecto?
+                  ¿Necesitas un recorrido virtual 360 para tu proyecto?
                 </h4>
                 <p className="text-blue-800 text-sm mb-4">
-                  Contáctanos para crear el gemelo digital perfecto para tu propiedad.
+                  Contáctanos para crear el recorrido virtual 360 perfecto para tu propiedad.
                 </p>
                 <button
                   onClick={() => router.push('/#contacto')}

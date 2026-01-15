@@ -28,7 +28,7 @@ export default function MatterportViewer({ iframe, title }: MatterportViewerProp
         <div className="flex items-center justify-between">
           <div>
             <h3 className="font-semibold text-gray-900">{title}</h3>
-            <p className="text-sm text-gray-600">Gemelo Digital - Matterport</p>
+            <p className="text-sm text-gray-600">Recorrido Virtual 360</p>
           </div>
           
           <div className="flex items-center gap-2">

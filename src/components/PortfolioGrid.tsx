@@ -23,7 +23,7 @@ export default function PortfolioGrid() {
             Nuestros <span className="font-medium text-blue-600">Proyectos</span>
           </h1>
           <p className="text-lg text-gray-700 max-w-3xl mx-auto leading-relaxed">
-            Explora nuestra colección de gemelos digitales. Cada proyecto representa 
+            Explora nuestra colección de recorridos virtuales 360. Cada proyecto representa 
             un espacio único capturado con la máxima calidad y detalle profesional.
           </p>
         </motion.div>
@@ -50,11 +50,11 @@ export default function PortfolioGrid() {
         >
           <div className="bg-white border border-gray-200 rounded-lg p-8 max-w-4xl mx-auto shadow-lg">
             <h2 className="text-2xl font-semibold text-gray-900 mb-4">
-              ¿Necesitas un gemelo digital para tu proyecto?
+              ¿Necesitas un recorrido virtual 360 para tu proyecto?
             </h2>
             <p className="text-gray-700 mb-6 text-lg">
               Trabajamos con propiedades residenciales, comerciales e industriales. 
-              Cada gemelo digital se crea con tecnología Matterport de última generación 
+              Cada recorrido virtual 360 se crea con tecnología de última generación 
               para garantizar la máxima calidad y precisión.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">

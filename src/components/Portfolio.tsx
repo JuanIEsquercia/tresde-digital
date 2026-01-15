@@ -23,7 +23,7 @@ export default function Portfolio() {
             <span className="font-extralight">Nuestros</span> <span className="font-semibold text-blue-600 tracking-wide">Proyectos</span>
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-8 leading-relaxed font-light">
-            Cada gemelo digital es una experiencia única que captura la esencia 
+            Cada recorrido virtual 360 es una experiencia única que captura la esencia 
             y los detalles de cada espacio con precisión profesional.
           </p>
           <a
@@ -59,7 +59,7 @@ export default function Portfolio() {
               ¿Interesado en nuestros servicios?
             </h3>
             <p className="text-gray-700 mb-6">
-              Contáctanos para crear el gemelo digital perfecto para tu proyecto.
+              Contáctanos para crear el recorrido virtual 360 perfecto para tu proyecto.
             </p>
             <a
               href="#contacto"

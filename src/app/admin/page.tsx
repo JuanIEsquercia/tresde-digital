@@ -105,7 +105,7 @@ export default function AdminPage() {
               }`}
             >
               <Box className="w-4 h-4" />
-              Gemelos Digitales
+              Recorridos Virtuales 360
             </button>
             <button
               onClick={() => setActiveTab('marcas')}

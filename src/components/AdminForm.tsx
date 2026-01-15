@@ -121,7 +121,7 @@ export default function AdminForm({ gemelos, onRefresh }: AdminFormProps) {
     <div className="max-w-6xl mx-auto p-6">
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">Panel de Administración</h1>
-        <p className="text-gray-600">Gestiona tus gemelos digitales</p>
+        <p className="text-gray-600">Gestiona tus recorridos virtuales 360</p>
       </div>
 
       {/* Formulario */}

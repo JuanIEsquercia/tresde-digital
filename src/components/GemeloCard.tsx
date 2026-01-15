@@ -26,7 +26,7 @@ export default function GemeloCard({ gemelo, index }: GemeloCardProps) {
             <div className="w-16 h-16 bg-white/20 backdrop-blur-md border border-white/30 rounded-full flex items-center justify-center mb-4 mx-auto shadow-lg group-hover:scale-110 transition-transform duration-300">
               <ExternalLink className="w-8 h-8 text-blue-600 group-hover:text-blue-700" />
             </div>
-            <p className="text-sm text-gray-700 font-medium">Gemelo Digital</p>
+            <p className="text-sm text-gray-700 font-medium">Recorrido Virtual 360</p>
           </div>
         </div>
         

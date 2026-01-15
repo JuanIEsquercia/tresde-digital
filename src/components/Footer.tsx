@@ -21,7 +21,7 @@ export default function Footer() {
           >
             <h3 className="text-xl font-semibold">TresDe Digital</h3>
             <p className="text-gray-400 text-sm leading-relaxed">
-              Especialistas en la creación de gemelos digitales de alta calidad 
+              Especialistas en la creación de recorridos virtuales 360 de alta calidad 
               para propiedades residenciales, comerciales e industriales.
             </p>
           </motion.div>
@@ -36,7 +36,7 @@ export default function Footer() {
           >
             <h4 className="text-lg font-medium">Servicios</h4>
             <ul className="space-y-2 text-sm text-gray-400">
-              <li>Gemelos Digitales Residenciales</li>
+              <li>Recorridos Virtuales 360 Residenciales</li>
               <li>Espacios Comerciales</li>
               <li>Propiedades Industriales</li>
               <li>Consultoría en Digitalización</li>
