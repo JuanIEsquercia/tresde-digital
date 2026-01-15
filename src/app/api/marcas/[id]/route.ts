@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { updateMarca, deleteMarca } from '@/lib/sheets';
+import { clearMarcasCache } from '../route';
 
 // PUT - Actualizar marca (en la hoja "Marcas" separada de los gemelos)
 export async function PUT(
@@ -24,6 +25,9 @@ export async function PUT(
       orden: orden || 0,
     });
 
+    // Limpiar cache del servidor para forzar recarga con datos actualizados
+    clearMarcasCache();
+
     return NextResponse.json({ success: true, marca: marcaActualizada });
   } catch (error) {
     console.error('Error al actualizar marca:', error);
@@ -44,6 +48,9 @@ export async function DELETE(
 
     // Eliminar de Google Sheets (hoja "Marcas")
     await deleteMarca(id);
+
+    // Limpiar cache del servidor para forzar recarga con datos actualizados
+    clearMarcasCache();
 
     return NextResponse.json({ success: true });
   } catch (error) {

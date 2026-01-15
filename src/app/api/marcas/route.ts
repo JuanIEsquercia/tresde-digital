@@ -6,6 +6,12 @@ let serverCache: Marca[] | null = null;
 let serverCacheTime = 0;
 const SERVER_CACHE_DURATION = 300000; // 5 minutos (Google Sheets es estable)
 
+// Función para limpiar el cache (exportada para usar en otras rutas)
+export function clearMarcasCache() {
+  serverCache = null;
+  serverCacheTime = 0;
+}
+
 // GET - Obtener todas las marcas (desde la hoja "Marcas" en Google Sheets)
 export async function GET() {
   try {

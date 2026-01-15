@@ -12,14 +12,12 @@ export const metadata: Metadata = {
   publisher: "TresDe Digital",
   robots: "index, follow",
   
-  // Favicon - Usando favicon.svg como favicon principal
+  // Favicon - Next.js 13+ usa automáticamente app/icon.svg
+  // Esta configuración es opcional pero ayuda con compatibilidad
   icons: {
-    icon: [
-      { url: "/favicon.svg", type: "image/svg+xml" },
-      { url: "/favicon.ico", sizes: "any" }, // Fallback para navegadores antiguos
-    ],
-    shortcut: "/favicon.svg",
-    apple: "/favicon.svg",
+    icon: "/icon.svg",
+    shortcut: "/icon.svg",
+    apple: "/icon.svg",
   },
   
   // Open Graph para redes sociales

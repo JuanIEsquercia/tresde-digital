@@ -95,7 +95,10 @@ export default function AdminMarcas({ marcas, onRefresh }: AdminMarcasProps) {
       if (data.success) {
         setSuccess(isEditing ? 'Marca actualizada correctamente' : 'Marca creada correctamente');
         resetForm();
-        onRefresh();
+        // Pequeño delay para asegurar que el cache se limpió y los datos se actualizaron
+        setTimeout(() => {
+          onRefresh();
+        }, 300);
       } else {
         setError(data.error || 'Error al guardar la marca');
       }
