@@ -13,12 +13,7 @@ export const metadata: Metadata = {
   robots: "index, follow",
   
   // Favicon - Next.js 13+ usa automáticamente app/icon.svg
-  // Esta configuración es opcional pero ayuda con compatibilidad
-  icons: {
-    icon: "/icon.svg",
-    shortcut: "/icon.svg",
-    apple: "/icon.svg",
-  },
+  // No necesitamos configurar icons aquí, Next.js lo maneja automáticamente
   
   // Open Graph para redes sociales
   openGraph: {
