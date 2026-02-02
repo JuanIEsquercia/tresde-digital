@@ -15,11 +15,17 @@ export default function MatterportViewer({ iframe, title }: MatterportViewerProp
     setIsFullscreen(!isFullscreen);
   };
 
-  // Modificar el iframe para que ocupe todo el espacio
+  // Modificar el iframe para que ocupe todo el espacio y funcione con cualquier plataforma (Matterport, Kuula, etc.)
   const optimizedIframe = iframe
     .replace(/width="[^"]*"/, 'width="100%"')
+    .replace(/width='[^']*'/, "width='100%'")
     .replace(/height="[^"]*"/, 'height="100%"')
-    .replace(/style="[^"]*"/, 'style="width: 100%; height: 100%; border: none;"');
+    .replace(/height='[^']*'/, "height='100%'")
+    .replace(/style="[^"]*"/, 'style="width: 100%; height: 100%; border: none;"')
+    .replace(/frameborder="[^"]*"/, 'frameborder="0"')
+    .replace(/frameborder='[^']*'/, "frameborder='0'")
+    .replace(/scrolling="[^"]*"/, '')
+    .replace(/scrolling='[^']*'/, '');
 
   return (
     <div className={`bg-white rounded-lg shadow-lg overflow-hidden ${isFullscreen ? 'fixed inset-0 z-50 rounded-none' : ''}`}>

@@ -170,7 +170,7 @@ export default function AdminForm({ gemelos, onRefresh }: AdminFormProps) {
 
           <div>
             <label htmlFor="iframe" className="block text-sm font-medium text-gray-700 mb-1">
-              Iframe de Matterport *
+              Iframe del Recorrido Virtual (Matterport, Kuula, etc.) *
             </label>
             <textarea
               id="iframe"
@@ -181,6 +181,9 @@ export default function AdminForm({ gemelos, onRefresh }: AdminFormProps) {
               onChange={(e) => setFormData({ ...formData, iframe: e.target.value })}
               placeholder="<iframe width='853' height='480' src='https://my.matterport.com/show/?m=...' frameborder='0' allowfullscreen allow='autoplay; fullscreen; web-share; xr-spatial-tracking;'></iframe>"
             />
+            <p className="mt-1 text-xs text-gray-500">
+              Soporta iframes de Matterport, Kuula y otras plataformas de recorridos virtuales 360
+            </p>
           </div>
 
           <div>

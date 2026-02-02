@@ -69,31 +69,50 @@ export async function getGemelos(): Promise<GemeloDigital[]> {
     for (let i = 1; i < rows.length; i++) { // Saltar header (fila 0)
       const row = rows[i];
       
+      // Log detallado de cada fila para debugging
+      console.log(`🔍 Procesando fila ${i + 1}:`, {
+        rowLength: row?.length,
+        hasRow: !!row,
+        firstElement: row?.[0],
+        isArray: Array.isArray(row)
+      });
+      
       // Verificar que la fila existe y tiene al menos un elemento (ID)
-      if (row && Array.isArray(row) && row.length > 0 && row[0]) {
-        const id = String(row[0]).trim();
+      if (row && Array.isArray(row) && row.length > 0) {
+        const id = String(row[0] || '').trim();
         
         // Solo procesar si tiene ID válido (no vacío)
         if (id) {
-          gemelos.push({
+          const gemelo = {
             id: id,
             titulo: String(row[1] || '').trim(),
             descripcion: String(row[2] || '').trim(),
             iframe: String(row[3] || '').trim(),
             fecha: String(row[4] || '').trim(),
             ubicacion: String(row[5] || '').trim(),
-          });
+          };
+          
+          console.log(`✅ Fila ${i + 1} procesada correctamente:`, gemelo.titulo);
+          gemelos.push(gemelo);
         } else {
-          console.log(`⚠️ Fila ${i + 1} omitida: ID vacío`);
+          console.log(`⚠️ Fila ${i + 1} omitida: ID vacío o inválido. Valor: "${row[0]}"`);
         }
       } else {
-        console.log(`⚠️ Fila ${i + 1} omitida: fila vacía o sin datos`);
+        console.log(`⚠️ Fila ${i + 1} omitida: fila vacía o sin datos. Tipo: ${typeof row}, Es array: ${Array.isArray(row)}`);
       }
     }
     
+    // Ordenar por fecha descendente (más recientes primero) para asegurar orden consistente
+    gemelos.sort((a, b) => {
+      const dateA = new Date(a.fecha).getTime();
+      const dateB = new Date(b.fecha).getTime();
+      return dateB - dateA; // Orden descendente
+    });
+    
     console.log(`✅ Total de recorridos procesados: ${gemelos.length}`);
-    console.log(`📋 IDs de recorridos:`, gemelos.map(g => g.id));
+    console.log(`📋 IDs de recorridos (ordenados por fecha):`, gemelos.map(g => g.id));
     console.log(`📋 Títulos de recorridos:`, gemelos.map(g => g.titulo));
+    console.log(`📋 Fechas de recorridos:`, gemelos.map(g => g.fecha));
     
     return gemelos;
   } catch (error) {
