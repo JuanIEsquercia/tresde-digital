@@ -34,11 +34,12 @@ export function useGemelos() {
       });
       const data = await response.json();
       
-      gemelosCache = data.gemelos || [];
+      const gemelosData = data.gemelos || [];
+      gemelosCache = gemelosData;
       lastFetch = now;
-      setGemelos(gemelosCache || []);
+      setGemelos(gemelosData);
       setError(null);
-      console.log(`✅ Recorridos cargados en frontend: ${gemelosCache.length}`);
+      console.log(`✅ Recorridos cargados en frontend: ${gemelosData.length}`);
     } catch (err) {
       setError('Error al cargar los datos');
       console.error('Error loading gemelos:', err);
