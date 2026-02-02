@@ -51,32 +51,49 @@ export async function getGemelos(): Promise<GemeloDigital[]> {
       throw new Error('Google Sheets no configurado correctamente');
     }
 
-    // Optimizar la consulta: solo obtener columnas necesarias y con límite
+    // Obtener todas las filas de la hoja (hasta 1000 filas para asegurar que capture todos los recorridos)
     const response = await sheets.spreadsheets.values.get({
       spreadsheetId: SHEET_ID,
-      range: 'A:F',
+      range: 'Hoja 1!A1:F1000',
       valueRenderOption: 'UNFORMATTED_VALUE', // Obtener valores sin formato para mejor rendimiento
       dateTimeRenderOption: 'FORMATTED_STRING',
     });
 
     const rows = response.data.values || [];
     
-    // Optimizar el procesamiento: usar map y filter en una sola pasada
+    console.log(`📊 Total de filas obtenidas de Google Sheets: ${rows.length}`);
+    
+    // Procesar todas las filas (saltar header)
     const gemelos: GemeloDigital[] = [];
     
-    for (let i = 1; i < rows.length; i++) { // Saltar header
+    for (let i = 1; i < rows.length; i++) { // Saltar header (fila 0)
       const row = rows[i];
-      if (row && row[0]) { // Solo procesar filas con ID
-        gemelos.push({
-          id: row[0] || '',
-          titulo: row[1] || '',
-          descripcion: row[2] || '',
-          iframe: row[3] || '',
-          fecha: row[4] || '',
-          ubicacion: row[5] || '',
-        });
+      
+      // Verificar que la fila existe y tiene al menos un elemento (ID)
+      if (row && Array.isArray(row) && row.length > 0 && row[0]) {
+        const id = String(row[0]).trim();
+        
+        // Solo procesar si tiene ID válido (no vacío)
+        if (id) {
+          gemelos.push({
+            id: id,
+            titulo: String(row[1] || '').trim(),
+            descripcion: String(row[2] || '').trim(),
+            iframe: String(row[3] || '').trim(),
+            fecha: String(row[4] || '').trim(),
+            ubicacion: String(row[5] || '').trim(),
+          });
+        } else {
+          console.log(`⚠️ Fila ${i + 1} omitida: ID vacío`);
+        }
+      } else {
+        console.log(`⚠️ Fila ${i + 1} omitida: fila vacía o sin datos`);
       }
     }
+    
+    console.log(`✅ Total de recorridos procesados: ${gemelos.length}`);
+    console.log(`📋 IDs de recorridos:`, gemelos.map(g => g.id));
+    console.log(`📋 Títulos de recorridos:`, gemelos.map(g => g.titulo));
     
     return gemelos;
   } catch (error) {
@@ -103,7 +120,7 @@ export async function createGemelo(data: Omit<GemeloDigital, 'id' | 'fecha'>): P
 
     await sheets.spreadsheets.values.append({
       spreadsheetId: SHEET_ID,
-      range: 'A:F',
+      range: 'Hoja 1!A:F',
       valueInputOption: 'RAW',
       requestBody: {
         values: [[
@@ -143,7 +160,7 @@ export async function updateGemelo(id: string, data: Partial<GemeloDigital>): Pr
     
     await sheets.spreadsheets.values.update({
       spreadsheetId: SHEET_ID,
-      range: `A${rowNumber}:F${rowNumber}`,
+      range: `Hoja 1!A${rowNumber}:F${rowNumber}`,
       valueInputOption: 'RAW',
       requestBody: {
         values: [[
@@ -180,13 +197,21 @@ export async function deleteGemelo(id: string): Promise<void> {
 
     const rowNumber = gemeloIndex + 2;
     
+    // Obtener el sheetId de la hoja "Hoja 1"
+    const spreadsheet = await sheets.spreadsheets.get({
+      spreadsheetId: SHEET_ID,
+    });
+    
+    const hoja1Sheet = spreadsheet.data.sheets?.find(s => s.properties?.title === 'Hoja 1');
+    const sheetId = hoja1Sheet?.properties?.sheetId || 0;
+    
     await sheets.spreadsheets.batchUpdate({
       spreadsheetId: SHEET_ID,
       requestBody: {
         requests: [{
           deleteDimension: {
             range: {
-              sheetId: 0,
+              sheetId: sheetId,
               dimension: 'ROWS',
               startIndex: rowNumber - 1,
               endIndex: rowNumber,

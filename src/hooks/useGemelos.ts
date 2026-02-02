@@ -25,9 +25,12 @@ export function useGemelos() {
 
     try {
       setIsLoading(true);
-      const response = await fetch('/api/gemelos', {
-        cache: 'force-cache', // Usar cache del navegador
-        next: { revalidate: 300 } // Revalidar cada 5 minutos
+      // Agregar timestamp para evitar caché del navegador
+      const response = await fetch(`/api/gemelos?refresh=true&t=${now}`, {
+        cache: 'no-store', // No usar cache del navegador
+        headers: {
+          'Cache-Control': 'no-cache'
+        }
       });
       const data = await response.json();
       
@@ -35,6 +38,7 @@ export function useGemelos() {
       lastFetch = now;
       setGemelos(gemelosCache || []);
       setError(null);
+      console.log(`✅ Recorridos cargados en frontend: ${gemelosCache.length}`);
     } catch (err) {
       setError('Error al cargar los datos');
       console.error('Error loading gemelos:', err);

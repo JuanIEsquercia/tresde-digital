@@ -40,7 +40,7 @@ export default function Portfolio() {
               <div className="text-gray-500">Cargando proyectos...</div>
             </div>
           ) : (
-            gemelos.slice(0, 3).map((gemelo, index) => (
+            gemelos.slice(0, 12).map((gemelo, index) => (
               <GemeloCard key={gemelo.id} gemelo={gemelo} index={index} />
             ))
           )}

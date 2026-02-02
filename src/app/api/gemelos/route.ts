@@ -7,12 +7,21 @@ let serverCacheTime = 0;
 const SERVER_CACHE_DURATION = 300000; // 5 minutos
 
 // GET - Obtener todos los gemelos
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
+    const { searchParams } = new URL(request.url);
+    const forceRefresh = searchParams.get('refresh') === 'true';
+    
     const now = Date.now();
     
+    // Si se fuerza la recarga, limpiar cache
+    if (forceRefresh) {
+      serverCache = null;
+      serverCacheTime = 0;
+    }
+    
     // Usar cache del servidor si está disponible
-    if (serverCache && (now - serverCacheTime) < SERVER_CACHE_DURATION) {
+    if (serverCache && (now - serverCacheTime) < SERVER_CACHE_DURATION && !forceRefresh) {
       const response = NextResponse.json({ gemelos: serverCache });
       response.headers.set('Cache-Control', 'public, max-age=300, stale-while-revalidate=600');
       response.headers.set('X-Cache', 'HIT');
