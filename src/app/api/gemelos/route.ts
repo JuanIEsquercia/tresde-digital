@@ -1,11 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { db } from '@/lib/firebase';
+import { getDb } from '@/lib/firebase';
 import { verifyAuth } from '@/lib/auth';
 import { gemeloSchema } from '@/lib/schemas';
 
 // GET - Obtener todos los gemelos
 export async function GET(request: NextRequest) {
   try {
+    const db = getDb();
     const gemelosRef = db.collection('gemelos');
     const snapshot = await gemelosRef.orderBy('fecha', 'desc').get();
 
@@ -46,6 +47,7 @@ export async function POST(request: NextRequest) {
     const fecha = new Date().toISOString().split('T')[0];
 
     // Crear en Firestore
+    const db = getDb();
     const newDocRef = await db.collection('gemelos').add({
       titulo,
       descripcion,

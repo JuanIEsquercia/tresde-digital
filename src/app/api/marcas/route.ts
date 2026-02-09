@@ -1,11 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { db } from '@/lib/firebase';
+import { getDb } from '@/lib/firebase';
 import { verifyAuth } from '@/lib/auth';
 import { marcaSchema } from '@/lib/schemas';
 
 // GET - Obtener todas las marcas
 export async function GET() {
   try {
+    const db = getDb();
     const marcasRef = db.collection('marcas');
     const snapshot = await marcasRef.orderBy('orden', 'asc').get();
 
@@ -46,6 +47,7 @@ export async function POST(request: NextRequest) {
     const fecha = new Date().toISOString().split('T')[0];
 
     // Crear en Firestore
+    const db = getDb();
     const newDocRef = await db.collection('marcas').add({
       nombre,
       logoUrl,

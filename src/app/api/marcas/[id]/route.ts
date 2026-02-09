@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { db } from '@/lib/firebase';
+import { getDb } from '@/lib/firebase';
 import { verifyAuth } from '@/lib/auth';
 import { marcaSchema } from '@/lib/schemas';
 
@@ -30,6 +30,7 @@ export async function PUT(
     const { nombre, logoUrl, url, orden } = validation.data;
 
     // Actualizar en Firestore
+    const db = getDb();
     await db.collection('marcas').doc(id).update({
       nombre,
       logoUrl,
@@ -69,6 +70,7 @@ export async function DELETE(
     const { id } = await params;
 
     // Eliminar de Firestore
+    const db = getDb();
     await db.collection('marcas').doc(id).delete();
 
     return NextResponse.json({ success: true });
