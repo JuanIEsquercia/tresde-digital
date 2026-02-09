@@ -1,8 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import AdminLogin from '@/components/AdminLogin';
 import AdminForm from '@/components/AdminForm';
 import AdminMarcas from '@/components/AdminMarcas';
 import { GemeloDigital } from '@/data/gemelos';
@@ -12,18 +11,25 @@ import { LogOut, Box, Building2 } from 'lucide-react';
 type TabType = 'gemelos' | 'marcas';
 
 export default function AdminPage() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [gemelos, setGemelos] = useState<GemeloDigital[]>([]);
   const [marcas, setMarcas] = useState<Marca[]>([]);
   const [activeTab, setActiveTab] = useState<TabType>('gemelos');
   const router = useRouter();
 
-  // Cargar gemelos solo cuando sea necesario
+  // Cargar datos iniciales
+  useEffect(() => {
+    loadGemelos();
+    loadMarcas();
+  }, []);
+
+  // Cargar gemelos
   const loadGemelos = async () => {
     try {
       const response = await fetch('/api/gemelos');
-      const data = await response.json();
-      setGemelos(data.gemelos || []);
+      if (response.ok) {
+        const data = await response.json();
+        setGemelos(data.gemelos || []);
+      }
     } catch {
       console.error('Error al cargar gemelos');
     }
@@ -33,33 +39,32 @@ export default function AdminPage() {
   const loadMarcas = async () => {
     try {
       const response = await fetch('/api/marcas');
-      const data = await response.json();
-      setMarcas(data.marcas || []);
+      if (response.ok) {
+        const data = await response.json();
+        setMarcas(data.marcas || []);
+      }
     } catch {
       console.error('Error al cargar marcas');
     }
   };
 
-  const handleLogin = () => {
-    setIsAuthenticated(true);
-    // Cargar datos después del login exitoso
-    loadGemelos();
-    loadMarcas();
-  };
-
   const handleLogout = async () => {
     try {
+      // Eliminar cookie via API (necesitamos crear este endpoint o hacerlo manual)
+      // Por ahora, asumimos que existe el endpoint o limpiamos del lado cliente si fuera posible (httpOnly no deja)
+      // Lo correcto es llamar a un endpoint de logout
+      document.cookie = 'admin-auth=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;'; // Fallback por si no es httpOnly (pero lo es)
+
+      // Mejor: llamar a API logout
       await fetch('/api/auth/logout', { method: 'POST' });
-      setIsAuthenticated(false);
-      router.push('/');
+
+      router.push('/admin/login');
+      router.refresh();
     } catch {
       console.error('Error al cerrar sesión');
     }
   };
 
-  if (!isAuthenticated) {
-    return <AdminLogin onLogin={handleLogin} />;
-  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -98,22 +103,20 @@ export default function AdminPage() {
           <div className="flex gap-1">
             <button
               onClick={() => setActiveTab('gemelos')}
-              className={`flex items-center gap-2 px-4 py-3 font-medium text-sm transition-colors border-b-2 ${
-                activeTab === 'gemelos'
+              className={`flex items-center gap-2 px-4 py-3 font-medium text-sm transition-colors border-b-2 ${activeTab === 'gemelos'
                   ? 'border-blue-600 text-blue-600'
                   : 'border-transparent text-gray-600 hover:text-gray-900'
-              }`}
+                }`}
             >
               <Box className="w-4 h-4" />
               Recorridos Virtuales 360
             </button>
             <button
               onClick={() => setActiveTab('marcas')}
-              className={`flex items-center gap-2 px-4 py-3 font-medium text-sm transition-colors border-b-2 ${
-                activeTab === 'marcas'
+              className={`flex items-center gap-2 px-4 py-3 font-medium text-sm transition-colors border-b-2 ${activeTab === 'marcas'
                   ? 'border-blue-600 text-blue-600'
                   : 'border-transparent text-gray-600 hover:text-gray-900'
-              }`}
+                }`}
             >
               <Building2 className="w-4 h-4" />
               Marcas

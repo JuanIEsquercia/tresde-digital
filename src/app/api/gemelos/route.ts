@@ -1,80 +1,74 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getGemelos, createGemelo, GemeloDigital } from '@/lib/sheets';
-
-// Cache en memoria del servidor
-let serverCache: GemeloDigital[] | null = null;
-let serverCacheTime = 0;
-const SERVER_CACHE_DURATION = 300000; // 5 minutos
+import { db } from '@/lib/firebase';
+import { verifyAuth } from '@/lib/auth';
+import { gemeloSchema } from '@/lib/schemas';
 
 // GET - Obtener todos los gemelos
 export async function GET(request: NextRequest) {
   try {
-    const { searchParams } = new URL(request.url);
-    const forceRefresh = searchParams.get('refresh') === 'true';
-    
-    const now = Date.now();
-    
-    // Si se fuerza la recarga, limpiar cache
-    if (forceRefresh) {
-      serverCache = null;
-      serverCacheTime = 0;
-    }
-    
-    // Usar cache del servidor si está disponible
-    if (serverCache && (now - serverCacheTime) < SERVER_CACHE_DURATION && !forceRefresh) {
-      const response = NextResponse.json({ gemelos: serverCache });
-      response.headers.set('Cache-Control', 'public, max-age=300, stale-while-revalidate=600');
-      response.headers.set('X-Cache', 'HIT');
-      return response;
-    }
-    
-    // Obtener datos frescos de Google Sheets
-    const gemelos = await getGemelos();
-    
-    // Actualizar cache del servidor
-    serverCache = gemelos;
-    serverCacheTime = now;
-    
-    // Agregar headers de cache optimizados
-    const response = NextResponse.json({ gemelos });
-    response.headers.set('Cache-Control', 'public, max-age=300, stale-while-revalidate=600');
-    response.headers.set('X-Cache', 'MISS');
-    
-    return response;
+    const gemelosRef = db.collection('gemelos');
+    const snapshot = await gemelosRef.orderBy('fecha', 'desc').get();
+
+    const gemelos = snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+
+    return NextResponse.json({ gemelos });
   } catch (error) {
-    console.error('Error al obtener gemelos:', error);
-    return NextResponse.json({ error: 'Error al leer los datos de Google Sheets' }, { status: 500 });
+    console.error('Error al obtener gemelos de Firebase:', error);
+    return NextResponse.json({ error: 'Error al leer los datos' }, { status: 500 });
   }
 }
 
 // POST - Crear nuevo gemelo
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json();
-    const { titulo, descripcion, iframe, ubicacion } = body;
-
-    // Validaciones básicas
-    if (!titulo || !descripcion || !iframe) {
-      return NextResponse.json({ error: 'Faltan campos requeridos' }, { status: 400 });
+    // 1. Verificar autenticación
+    if (!(await verifyAuth(request))) {
+      return NextResponse.json({ error: 'No autorizado' }, { status: 401 });
     }
 
-    // Crear gemelo en Google Sheets
-    const nuevoGemelo = await createGemelo({
+    const body = await request.json();
+
+    // 2. Validar datos con Zod
+    const validation = gemeloSchema.safeParse(body);
+
+    if (!validation.success) {
+      return NextResponse.json({
+        error: 'Datos inválidos',
+        details: validation.error.format()
+      }, { status: 400 });
+    }
+
+    const { titulo, descripcion, iframe, ubicacion } = validation.data;
+
+    const fecha = new Date().toISOString().split('T')[0];
+
+    // Crear en Firestore
+    const newDocRef = await db.collection('gemelos').add({
       titulo,
       descripcion,
       iframe,
-      ubicacion: ubicacion || ''
+      ubicacion: ubicacion || '',
+      fecha,
+      createdAt: new Date().toISOString()
     });
 
-    // Limpiar cache del servidor para forzar recarga
-    serverCache = null;
-    serverCacheTime = 0;
+    const newGemelo = {
+      id: newDocRef.id,
+      titulo,
+      descripcion,
+      iframe,
+      ubicacion: ubicacion || '',
+      fecha
+    };
 
-    return NextResponse.json({ success: true, gemelo: nuevoGemelo });
+    return NextResponse.json({ success: true, gemelo: newGemelo });
   } catch (error) {
-    console.error('Error al crear gemelo:', error);
-    return NextResponse.json({ 
-      error: 'Error al crear el gemelo en Google Sheets' 
+    console.error('Error al crear gemelo en Firebase:', error);
+    return NextResponse.json({
+      error: 'Error al crear el gemelo'
     }, { status: 500 });
   }
 }
