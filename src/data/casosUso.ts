@@ -92,15 +92,15 @@ export const casosUso: CasoUso[] = [
     {
         id: 'construccion',
         titulo: 'Construcción & Avance',
-        descripcionCorta: 'Documentá cómo van las cañerías y la obra antes de cerrar las paredes.',
-        descripcionLarga: 'La mejor forma de mantener informados a los dueños e inversores. Generá un registro visual exacto de cómo van los avances y documentá instalaciones (caños, cables) antes de revocar, para tener un plano visual real ante futuros arreglos.',
+        descripcionCorta: 'Olvidate de romper paredes buscando un caño. Documentá todo antes de tapar.',
+        descripcionLarga: 'La mejor forma de mostrarle al dueño cómo avanza la obra sin que tenga que ir todos los días. Además, generás un archivo visual de dónde pasan los caños y cables antes de cerrar las paredes. El día de mañana, si hay una pérdida, sabés exactamente dónde picar.',
         Icono: HardHat,
-        color: 'yellow',
+        color: 'slate',
         beneficios: [
-            'Registro visual indiscutible del avance.',
-            'Sabés exactamente dónde pasan los caños (documentación).',
-            'Evitá discusiones sobre "qué se hizo y cuándo".',
-            'Ideal para arquitectos que reportan a distancia.'
+            'Registro visual de la obra para evitar dudas.',
+            'Sabés exactamente dónde pasan los caños.',
+            'Evitá romper de más en futuros arreglos.',
+            'Ideal para arquitectos que quieren reportar fácil.'
         ]
     }
 ];

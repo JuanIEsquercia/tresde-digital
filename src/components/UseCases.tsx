@@ -16,6 +16,7 @@ export default function UseCases() {
             case 'purple': return 'bg-purple-50 text-purple-600 border-purple-200 hover:border-purple-300';
             case 'yellow': return 'bg-yellow-50 text-yellow-600 border-yellow-200 hover:border-yellow-300';
             case 'rose': return 'bg-rose-50 text-rose-600 border-rose-200 hover:border-rose-300';
+            case 'slate': return 'bg-slate-50 text-slate-600 border-slate-200 hover:border-slate-300';
             default: return 'bg-gray-50 text-gray-600 border-gray-200 hover:border-gray-300';
         }
     };
@@ -28,6 +29,7 @@ export default function UseCases() {
             case 'purple': return 'bg-purple-100 text-purple-600';
             case 'yellow': return 'bg-yellow-100 text-yellow-600';
             case 'rose': return 'bg-rose-100 text-rose-600';
+            case 'slate': return 'bg-slate-100 text-slate-600';
             default: return 'bg-gray-100 text-gray-600';
         }
     };
@@ -122,7 +124,7 @@ export default function UseCases() {
 
                                             <div className="relative z-10 flex items-center gap-4 mb-4">
                                                 <div className={`p-3 rounded-xl bg-white shadow-sm`}>
-                                                    <caso.Icono className={`w-8 h-8 ${caso.color === 'blue' ? 'text-blue-600' : caso.color === 'orange' ? 'text-orange-600' : caso.color === 'green' ? 'text-green-600' : caso.color === 'purple' ? 'text-purple-600' : caso.color === 'yellow' ? 'text-yellow-600' : caso.color === 'rose' ? 'text-rose-600' : 'text-gray-600'}`} />
+                                                    <caso.Icono className={`w-8 h-8 ${caso.color === 'blue' ? 'text-blue-600' : caso.color === 'orange' ? 'text-orange-600' : caso.color === 'green' ? 'text-green-600' : caso.color === 'purple' ? 'text-purple-600' : caso.color === 'yellow' ? 'text-yellow-600' : caso.color === 'rose' ? 'text-rose-600' : caso.color === 'slate' ? 'text-slate-600' : 'text-gray-600'}`} />
                                                 </div>
                                                 <h3 className="text-2xl font-bold text-gray-900">{caso.titulo}</h3>
                                             </div>
@@ -147,7 +149,7 @@ export default function UseCases() {
                                                         key={i}
                                                         className="flex items-start gap-3 p-3 rounded-lg bg-gray-50 border border-gray-100"
                                                     >
-                                                        <CheckCircle2 className={`w-5 h-5 mt-0.5 flex-shrink-0 ${caso.color === 'blue' ? 'text-blue-500' : caso.color === 'orange' ? 'text-orange-500' : caso.color === 'green' ? 'text-green-500' : caso.color === 'purple' ? 'text-purple-500' : caso.color === 'yellow' ? 'text-yellow-500' : caso.color === 'rose' ? 'text-rose-500' : 'text-gray-500'}`} />
+                                                        <CheckCircle2 className={`w-5 h-5 mt-0.5 flex-shrink-0 ${caso.color === 'blue' ? 'text-blue-500' : caso.color === 'orange' ? 'text-orange-500' : caso.color === 'green' ? 'text-green-500' : caso.color === 'purple' ? 'text-purple-500' : caso.color === 'yellow' ? 'text-yellow-500' : caso.color === 'rose' ? 'text-rose-500' : caso.color === 'slate' ? 'text-slate-500' : 'text-gray-500'}`} />
                                                         <span className="text-gray-700 text-sm font-medium">{beneficio}</span>
                                                     </motion.div>
                                                 ))}
