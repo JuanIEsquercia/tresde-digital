@@ -1,5 +1,6 @@
 import Header from '@/components/Header';
 import Hero from '@/components/Hero';
+import UseCases from '@/components/UseCases';
 import Portfolio from '@/components/Portfolio';
 import MarcasCarousel from '@/components/MarcasCarousel';
 import Contacto from '@/components/Contacto';
@@ -11,6 +12,7 @@ export default function Home() {
       <Header />
       <main>
         <Hero />
+        <UseCases />
         <Portfolio />
         <MarcasCarousel />
         <Contacto />
