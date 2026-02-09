@@ -11,10 +11,10 @@ export const metadata: Metadata = {
   creator: "TresDe Digital",
   publisher: "TresDe Digital",
   robots: "index, follow",
-  
+
   // Favicon - Next.js 13+ usa automáticamente app/icon.svg
   // No necesitamos configurar icons aquí, Next.js lo maneja automáticamente
-  
+
   // Open Graph para redes sociales
   openGraph: {
     title: "TresDe Digital - Recorridos Virtuales 360 de Alta Calidad",
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
       },
     ],
   },
-  
+
   // Twitter/X Card
   twitter: {
     card: "summary_large_image",
@@ -41,12 +41,12 @@ export const metadata: Metadata = {
     images: ["/og-image.svg"],
     creator: "@tresde_digital",
   },
-  
+
   // Metadatos adicionales
   alternates: {
     canonical: "https://tresde.site",
   },
-  
+
   // Para WhatsApp y otras apps
   other: {
     "whatsapp:title": "TresDe Digital - Recorridos Virtuales 360",
@@ -63,6 +63,48 @@ export default function RootLayout({
     <html lang="es">
       <body className="antialiased">
         <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID || ''} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "ProfessionalService",
+              "name": "TresDe Digital",
+              "image": "https://tresde.site/og-image.svg",
+              "description": "Transformamos espacios reales en experiencias digitales inmersivas. Especialistas en recorridos virtuales 360 Matterport en Argentina.",
+              "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "Corrientes",
+                "addressRegion": "Corrientes",
+                "addressCountry": "AR"
+              },
+              "geo": {
+                "@type": "GeoCoordinates",
+                "latitude": "-27.4692",
+                "longitude": "-58.8306"
+              },
+              "url": "https://tresde.site",
+              "telephone": "+543794267780",
+              "priceRange": "$$",
+              "openingHoursSpecification": {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": [
+                  "Monday",
+                  "Tuesday",
+                  "Wednesday",
+                  "Thursday",
+                  "Friday"
+                ],
+                "opens": "09:00",
+                "closes": "18:00"
+              },
+              "sameAs": [
+                "https://www.instagram.com/tresde.digital",
+                "https://www.facebook.com/tresdedigital"
+              ]
+            })
+          }}
+        />
         {children}
         <WhatsAppButton />
       </body>

@@ -1,12 +1,24 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { casosUso, CasoUso } from '@/data/casosUso';
 
 export default function UseCases() {
     const [selectedId, setSelectedId] = useState<string | null>(null);
+
+    // Bloquear scroll del body cuando hay un modal abierto
+    useEffect(() => {
+        if (selectedId) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'unset';
+        }
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
+    }, [selectedId]);
 
     const getColorClass = (color: string) => {
         switch (color) {
@@ -104,43 +116,48 @@ export default function UseCases() {
                                 className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 flex items-center justify-center p-4"
                             />
 
-                            <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none p-4">
+                            <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none p-4 sm:p-6">
                                 {casosUso.filter(c => c.id === selectedId).map(caso => (
                                     <motion.div
                                         layoutId={`card-${caso.id}`}
                                         key={caso.id}
-                                        className="w-full max-w-2xl bg-white rounded-3xl overflow-hidden shadow-2xl pointer-events-auto relative"
+                                        className="w-full max-w-2xl bg-white rounded-2xl sm:rounded-3xl shadow-2xl pointer-events-auto relative flex flex-col max-h-[90vh] sm:max-h-[85vh] overflow-hidden"
                                     >
-                                        {/* Header with gradient based on color */}
-                                        <div className={`p-8 pb-12 relative overflow-hidden ${getIconBg(caso.color).replace('text-', 'bg-opacity-10 text-')}`}>
+                                        {/* Header with gradient based on color - Sticky on mobile */}
+                                        <div className={`p-6 sm:p-8 relative shrink-0 ${getIconBg(caso.color).replace('text-', 'bg-opacity-10 text-')}`}>
                                             <div className="absolute top-0 right-0 w-64 h-64 bg-current opacity-5 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2" />
 
                                             <button
                                                 onClick={(e) => { e.stopPropagation(); setSelectedId(null); }}
-                                                className="absolute top-4 right-4 p-2 bg-white/80 rounded-full hover:bg-white transition-colors"
+                                                className="absolute top-4 right-4 p-2 bg-white/80 rounded-full hover:bg-white transition-colors z-20"
                                             >
                                                 <X className="w-5 h-5 text-gray-600" />
                                             </button>
 
-                                            <div className="relative z-10 flex items-center gap-4 mb-4">
-                                                <div className={`p-3 rounded-xl bg-white shadow-sm`}>
-                                                    <caso.Icono className={`w-8 h-8 ${caso.color === 'blue' ? 'text-blue-600' : caso.color === 'orange' ? 'text-orange-600' : caso.color === 'green' ? 'text-green-600' : caso.color === 'purple' ? 'text-purple-600' : caso.color === 'yellow' ? 'text-yellow-600' : caso.color === 'rose' ? 'text-rose-600' : caso.color === 'slate' ? 'text-slate-600' : 'text-gray-600'}`} />
+                                            <div className="relative z-10 flex items-center gap-3 sm:gap-4 mb-2 sm:mb-4 pr-10">
+                                                <div className={`p-2 sm:p-3 rounded-xl bg-white shadow-sm`}>
+                                                    <caso.Icono className={`w-6 h-6 sm:w-8 sm:h-8 ${caso.color === 'blue' ? 'text-blue-600' : caso.color === 'orange' ? 'text-orange-600' : caso.color === 'green' ? 'text-green-600' : caso.color === 'purple' ? 'text-purple-600' : caso.color === 'yellow' ? 'text-yellow-600' : caso.color === 'rose' ? 'text-rose-600' : caso.color === 'slate' ? 'text-slate-600' : 'text-gray-600'}`} />
                                                 </div>
-                                                <h3 className="text-2xl font-bold text-gray-900">{caso.titulo}</h3>
+                                                <h3 className="text-xl sm:text-2xl font-bold text-gray-900 leading-tight">{caso.titulo}</h3>
                                             </div>
 
-                                            <p className="text-lg text-gray-700 font-medium leading-relaxed max-w-xl">
+                                            <p className="text-sm sm:text-lg text-gray-700 font-medium leading-relaxed max-w-xl hidden sm:block">
                                                 {caso.descripcionLarga}
                                             </p>
                                         </div>
 
-                                        {/* Content */}
-                                        <div className="p-8 -mt-6 bg-white rounded-t-3xl relative">
-                                            <h4 className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-6">
+                                        {/* Scrollable Content */}
+                                        <div className="p-6 sm:p-8 bg-white rounded-t-3xl relative overflow-y-auto -mt-6 sm:mt-0 flex-1">
+                                            {/* Mobile only description */}
+                                            <p className="text-gray-700 leading-relaxed mb-6 sm:hidden text-sm">
+                                                {caso.descripcionLarga}
+                                            </p>
+
+                                            <h4 className="text-xs sm:text-sm font-bold text-gray-400 uppercase tracking-wider mb-4 sm:mb-6">
                                                 Beneficios Clave
                                             </h4>
 
-                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 mb-8">
                                                 {caso.beneficios.map((beneficio, i) => (
                                                     <motion.div
                                                         initial={{ opacity: 0, x: -10 }}
@@ -154,24 +171,25 @@ export default function UseCases() {
                                                     </motion.div>
                                                 ))}
                                             </div>
+                                        </div>
 
-                                            <div className="flex justify-end gap-3 pt-4 border-t border-gray-100">
-                                                <button
-                                                    onClick={() => setSelectedId(null)}
-                                                    className="px-6 py-2.5 text-gray-600 font-medium hover:bg-gray-50 rounded-lg transition-colors"
-                                                >
-                                                    Cerrar
-                                                </button>
-                                                <a
-                                                    href="https://wa.me/543794267780"
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    className="px-6 py-2.5 bg-gray-900 text-white font-medium rounded-lg hover:bg-gray-800 transition-colors shadow-lg hover:shadow-xl flex items-center gap-2"
-                                                >
-                                                    <span>Solicitar Demo</span>
-                                                    <ArrowRight className="w-4 h-4" />
-                                                </a>
-                                            </div>
+                                        {/* Footer - Fixed at bottom of modal */}
+                                        <div className="p-4 sm:p-6 border-t border-gray-100 bg-gray-50 shrink-0 flex justify-end gap-3 z-10">
+                                            <button
+                                                onClick={() => setSelectedId(null)}
+                                                className="px-4 sm:px-6 py-2 sm:py-2.5 text-gray-600 font-medium hover:bg-gray-100 rounded-lg transition-colors text-sm sm:text-base"
+                                            >
+                                                Cerrar
+                                            </button>
+                                            <a
+                                                href="https://wa.me/543794267780"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="px-4 sm:px-6 py-2 sm:py-2.5 bg-gray-900 text-white font-medium rounded-lg hover:bg-gray-800 transition-colors shadow-lg hover:shadow-xl flex items-center gap-2 text-sm sm:text-base"
+                                            >
+                                                <span>Solicitar Demo</span>
+                                                <ArrowRight className="w-4 h-4" />
+                                            </a>
                                         </div>
                                     </motion.div>
                                 ))}
