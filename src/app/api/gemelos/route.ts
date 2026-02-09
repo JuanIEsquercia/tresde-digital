@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
       }, { status: 400 });
     }
 
-    const { titulo, descripcion, iframe, ubicacion } = validation.data;
+    const { titulo, descripcion, iframe, ubicacion, thumbnailUrl } = validation.data;
 
     const fecha = new Date().toISOString().split('T')[0];
 
@@ -53,6 +53,7 @@ export async function POST(request: NextRequest) {
       descripcion,
       iframe,
       ubicacion: ubicacion || '',
+      thumbnailUrl: thumbnailUrl || '',
       fecha,
       createdAt: new Date().toISOString()
     });
@@ -63,6 +64,7 @@ export async function POST(request: NextRequest) {
       descripcion,
       iframe,
       ubicacion: ubicacion || '',
+      thumbnailUrl: thumbnailUrl || '',
       fecha
     };
 

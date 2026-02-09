@@ -5,6 +5,7 @@ export interface GemeloDigital {
   iframe: string;
   fecha: string;
   ubicacion?: string;
+  thumbnailUrl?: string;
 }
 
 export const gemelosDigitales: GemeloDigital[] = [

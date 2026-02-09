@@ -5,6 +5,7 @@ export const gemeloSchema = z.object({
   descripcion: z.string().min(1, 'La descripción es requerida'),
   iframe: z.string().min(10, 'El código del iframe es requerido').includes('<iframe', { message: 'Debe contener una etiqueta iframe' }),
   ubicacion: z.string().optional(),
+  thumbnailUrl: z.string().url('Debe ser una URL válida').optional().or(z.literal('')),
 });
 
 export const marcaSchema = z.object({
