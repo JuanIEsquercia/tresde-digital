@@ -3,8 +3,8 @@ import {
     Factory,
     Store,
     Landmark,
-    GraduationCap,
     HardHat,
+    Home,
     LucideIcon
 } from 'lucide-react';
 
@@ -21,72 +21,86 @@ export interface CasoUso {
 export const casosUso: CasoUso[] = [
     {
         id: 'real-estate',
-        titulo: 'Real Estate & Inmobiliarias',
-        descripcionCorta: 'Acelera ventas y alquileres permitiendo visitas 24/7 desde cualquier lugar del mundo.',
-        descripcionLarga: 'Transforma la experiencia de compra y alquiler. Los recorridos virtuales permiten a los potenciales clientes "caminar" por la propiedad sin moverse de su casa, filtrando visitas innecesarias y captando compradores realmente interesados.',
+        titulo: 'Inmobiliarias & Venta',
+        descripcionCorta: 'Acelera las ventas y evita visitas innecesarias mostrando la propiedad como si estuvieran ahí.',
+        descripcionLarga: 'Transforma la experiencia de compra. No es lo mismo ver fotos que "caminar" la casa desde el celular. Filtra a los curiosos y quedate solo con los clientes que realmente están interesados, ahorrando tiempo y nafta en visitas que no cierran.',
         Icono: Building2,
         color: 'blue',
         beneficios: [
-            'Visitas remotas 24/7 sin coordinación de agenda.',
-            'Filtrado de curiosos: Solo visitas presenciales de calidad.',
-            'Diferenciación de marca en portales inmobiliarios.',
-            'Mayor confianza y transparencia para el comprador.'
+            'Visitas disponibles las 24 horas, sin coordinar llaves.',
+            'Menos curiosos, más clientes reales.',
+            'Tu inmobiliaria se destaca del resto en los portales.',
+            'Genera confianza total mostrando cada rincón.'
+        ]
+    },
+    {
+        id: 'airbnb',
+        titulo: 'Airbnb & Temporarios',
+        descripcionCorta: 'Destacate en plataformas y dale seguridad a tus huéspedes de que lo que ven es real.',
+        descripcionLarga: 'En el mundo del alquiler temporal, la confianza lo es todo. Un recorrido 360 elimina las dudas de "¿será como en las fotos?" y te ayuda a justificar el precio. Ideal para resaltar amenities, la distribución de las camas y el equipamiento real del departamento.',
+        Icono: Home,
+        color: 'rose',
+        beneficios: [
+            'Más reservas al generar mayor confianza.',
+            'Menos preguntas repetitivas sobre distribución.',
+            'Expectativas claras = Mejores reseñas (5 estrellas).',
+            'Material de lujo para tu Instagram y redes.'
         ]
     },
     {
         id: 'industria',
-        titulo: 'Industria & Plantas',
-        descripcionCorta: 'Documentación técnica, capacitación de personal y visitas virtuales para inversores.',
-        descripcionLarga: 'Digitaliza tus instalaciones para optimizar procesos. Ideal para inducción de seguridad (HSE), planificación de mantenimiento remoto y presentación de infraestructura a socios globales sin gastos de viaje.',
+        titulo: 'Industria & Fábricas',
+        descripcionCorta: 'Capacitación, seguridad y recorridos para socios sin moverte de la oficina.',
+        descripcionLarga: 'Digitaliza tu planta para mostrarla al mundo o para uso interno. Es una herramienta clave para inducciones de seguridad (saber dónde están los matafuegos o salidas antes de pisar la fábrica) y para mostrar tu infraestructura a inversores sin pagar viáticos.',
         Icono: Factory,
         color: 'orange',
         beneficios: [
-            'Capacitación de personal en entornos de riesgo cero.',
-            'Etiquetado de activos y maquinaria (Mattertags).',
-            'Auditorías remotas y planificación de obras.',
-            'Reducción drástica de costos de viaje.'
+            'Capacitación de personal en entorno seguro (HSE).',
+            'Etiquetas interactivas en máquinas e instalaciones.',
+            'Auditorías remotas sin traslados.',
+            'Ahorro enorme en viajes y logística.'
         ]
     },
     {
         id: 'retail',
-        titulo: 'Retail & Comercios',
-        descripcionCorta: 'Lleva tu tienda física al mundo digital y publica directamente en Google Street View.',
-        descripcionLarga: 'No es solo una foto 360, es una experiencia de compra inmersiva. Conecta tu recorrido con Google Maps para mejorar tu SEO local y permite que los clientes descubran tu ambiente y productos antes de salir de casa.',
+        titulo: 'Locales & Comercios',
+        descripcionCorta: 'Abrí las puertas de tu negocio en Google Maps y atraé visitas desde el buscador.',
+        descripcionLarga: 'No es solo una foto, es invitar a la gente a entrar. Al conectar el recorrido con Google Street View, mejorás tu posicionamiento en el mapa. Ideal para restaurantes, showrooms y locales de diseño que quieren mostrar "la experiencia" de estar ahí.',
         Icono: Store,
         color: 'green',
         beneficios: [
-            'Integración directa con Google Street View.',
-            'Mayor visibilidad en búsquedas locales (SEO).',
-            'Etiquetas interactivas con enlaces a e-commerce.',
-            'Generación de confianza para nuevos visitantes.'
+            'Aparecé destacado en Google Maps.',
+            'El cliente conoce el lugar antes de ir.',
+            'Podés etiquetar productos con link a compra (e-commerce).',
+            'Imagen moderna y profesional de tu marca.'
         ]
     },
     {
         id: 'cultura',
         titulo: 'Museos & Educación',
-        descripcionCorta: 'Preservación del patrimonio y acceso universal a la cultura y el conocimiento.',
-        descripcionLarga: 'Rompe las barreras físicas y económicas. Permite que escuelas y personas de todo el mundo visiten exposiciones, sitios históricos o campus educativos. Enriquece la visita con audio, video y texto explicativo en cada punto de interés.',
+        descripcionCorta: 'Llevá el patrimonio y el conocimiento a cualquier escuela o casa del país.',
+        descripcionLarga: 'Democratizá el acceso a la cultura. Permití que escuelas rurales o personas que no pueden viajar recorran el museo o el sitio histórico. Podés agregar audios, videos y textos explicativos en cada obra para que la visita sea 100% educativa.',
         Icono: Landmark,
         color: 'purple',
         beneficios: [
-            'Acceso universal e inclusivo a la cultura.',
-            'Preservación digital histórica de alta fidelidad.',
-            'Experiencias educativas gamificadas.',
-            'Atracción de turismo internacional.'
+            'Acceso inclusivo para todos.',
+            'Preservación digital del patrimonio (archivo histórico).',
+            'Experiencias interactivas para alumnos.',
+            'Atrae turismo mostrando un adelanto de la visita.'
         ]
     },
     {
         id: 'construccion',
-        titulo: 'Construcción & Arquitectura',
-        descripcionCorta: 'Seguimiento de obra inmersivo y documentación de hitos constructivos.',
-        descripcionLarga: 'Mantén a todos los stakeholders informados con un registro visual preciso del avance de obra. Revisa instalaciones antes de cerrar paredes y techos, creando un archivo "As-Built" indiscutible para futuros mantenimientos.',
+        titulo: 'Construcción & Avance',
+        descripcionCorta: 'Documentá cómo van las cañerías y la obra antes de cerrar las paredes.',
+        descripcionLarga: 'La mejor forma de mantener informados a los dueños e inversores. Generá un registro visual exacto de cómo van los avances y documentá instalaciones (caños, cables) antes de revocar, para tener un plano visual real ante futuros arreglos.',
         Icono: HardHat,
         color: 'yellow',
         beneficios: [
-            'Registro histórico de avance de obra.',
-            'Documentación de instalaciones ocultas.',
-            'Resolución rápida de disputas.',
-            'Colaboración remota entre arquitectos e ingenieros.'
+            'Registro visual indiscutible del avance.',
+            'Sabés exactamente dónde pasan los caños (documentación).',
+            'Evitá discusiones sobre "qué se hizo y cuándo".',
+            'Ideal para arquitectos que reportan a distancia.'
         ]
     }
 ];
