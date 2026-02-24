@@ -25,20 +25,40 @@ a {
   text-decoration: none;
 }
 
-/* Estilos para scrollbar minimalista */
+/* Estilos para scrollbar minimalista y premium */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f5f5f5;
+  background: #f9fafb;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #737373;
-  border-radius: 3px;
+  background: #d1d5db;
+  border-radius: 10px;
+  border: 2px solid #f9fafb;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #171717;
+  background: #3b82f6;
+}
+
+/* Glassmorphism Utilities */
+@layer utilities {
+  .glass-header {
+    @apply bg-white/70 backdrop-blur-md border-b border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.03)];
+  }
+  
+  .glass-card {
+    @apply bg-white/40 backdrop-blur-lg border border-white/40 shadow-[0_8px_32px_rgba(0,0,0,0.05)];
+  }
+
+  .glass-morphism {
+    @apply bg-white/20 backdrop-blur-xl border border-white/30 shadow-2xl;
+  }
+
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-blue-400;
+  }
 }

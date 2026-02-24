@@ -4,69 +4,95 @@ import { motion } from 'framer-motion';
 import GemeloCard from './GemeloCard';
 import { useGemelos } from '@/hooks/useGemelos';
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1
+    }
+  }
+};
+
 export default function Portfolio() {
   const { gemelos, isLoading } = useGemelos();
+
   return (
-    <section id="portfolio" className="py-24 bg-gray-50">
+    <section id="portfolio" className="py-32 bg-gray-50/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-24"
         >
-          {/* Línea decorativa */}
-          <div className="w-16 h-px bg-gradient-to-r from-transparent via-blue-500 to-transparent mb-6 mx-auto"></div>
-          
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-light text-gray-900 mb-6 tracking-tight">
-            <span className="font-extralight">Nuestros</span> <span className="font-semibold text-blue-600 tracking-wide">Proyectos</span>
-          </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-8 leading-relaxed font-light">
-            Cada recorrido virtual 360 es una experiencia única que captura la esencia 
-            y los detalles de cada espacio con precisión profesional.
-          </p>
-          <a
-            href="/portfolio"
-            className="inline-flex items-center px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 font-medium"
+          <motion.span
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            className="text-blue-600 font-bold tracking-[0.2em] text-sm uppercase mb-4 block"
           >
-            Ver Todos los Proyectos
-          </a>
+            Explora nuestro trabajo
+          </motion.span>
+          <h2 className="text-4xl sm:text-5xl lg:text-7xl font-bold text-gray-900 mb-8 tracking-tight">
+            Proyectos <span className="text-blue-600">Destacados</span>
+          </h2>
+          <p className="text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed font-light">
+            Soluciones innovadoras de realidad virtual que transforman la manera en que experimentas el mundo físico.
+          </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 w-full"
+        >
           {isLoading ? (
-            <div className="col-span-full text-center py-8">
-              <div className="text-gray-500">Cargando proyectos...</div>
-            </div>
+            Array.from({ length: 6 }).map((_, i) => (
+              <div key={i} className="aspect-[4/3] bg-gray-200 animate-pulse rounded-[2rem]"></div>
+            ))
           ) : (
             gemelos.slice(0, 12).map((gemelo, index) => (
               <GemeloCard key={gemelo.id} gemelo={gemelo} index={index} />
             ))
           )}
-        </div>
+        </motion.div>
 
-        {/* Call to Action */}
+        {/* Premium CTA */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="text-center mt-16"
+          className="mt-32 relative group"
         >
-          <div className="bg-white/80 backdrop-blur-md border border-gray-100 rounded-xl p-8 max-w-2xl mx-auto shadow-xl hover:shadow-2xl transition-all duration-300">
-            <h3 className="text-2xl font-semibold text-gray-900 mb-4">
-              ¿Interesado en nuestros servicios?
+          <div className="absolute inset-0 bg-blue-600 rounded-[3rem] blur-3xl opacity-10 group-hover:opacity-20 transition-opacity"></div>
+          <div className="relative glass-morphism rounded-[3rem] p-12 sm:p-20 text-center overflow-hidden">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 rounded-full -mr-32 -mt-32 blur-3xl"></div>
+            <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-500/10 rounded-full -ml-32 -mb-32 blur-3xl"></div>
+
+            <h3 className="text-3xl sm:text-5xl font-bold text-gray-900 mb-6">
+              ¿Listo para dar el salto digital?
             </h3>
-            <p className="text-gray-700 mb-6">
-              Contáctanos para crear el recorrido virtual 360 perfecto para tu proyecto.
+            <p className="text-xl text-gray-600 mb-12 max-w-2xl mx-auto font-light">
+              Únete a las empresas líderes que ya están utilizando gemelos digitales para revolucionar su industria.
             </p>
-            <a
-              href="#contacto"
-              className="inline-flex items-center px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 font-medium"
-            >
-              Contactar Ahora
-            </a>
+            <div className="flex flex-wrap justify-center gap-6">
+              <a
+                href="#contacto"
+                className="px-10 py-4 bg-gray-900 text-white rounded-2xl font-bold hover:bg-gray-800 transition-all shadow-2xl hover:-translate-y-1"
+              >
+                Empezar proyecto
+              </a>
+              <a
+                href="/portfolio"
+                className="px-10 py-4 bg-white border border-gray-200 text-gray-900 rounded-2xl font-bold hover:bg-gray-50 transition-all hover:-translate-y-1"
+              >
+                Ver más ejemplos
+              </a>
+            </div>
           </div>
         </motion.div>
       </div>

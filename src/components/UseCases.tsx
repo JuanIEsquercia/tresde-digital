@@ -128,7 +128,11 @@ export default function UseCases() {
                                             <div className="absolute top-0 right-0 w-64 h-64 bg-current opacity-5 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2" />
 
                                             <button
-                                                onClick={(e) => { e.stopPropagation(); setSelectedId(null); }}
+                                                type="button"
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    setSelectedId(null);
+                                                }}
                                                 className="absolute top-4 right-4 p-2 bg-white/80 rounded-full hover:bg-white transition-colors z-20"
                                             >
                                                 <X className="w-5 h-5 text-gray-600" />
@@ -174,10 +178,14 @@ export default function UseCases() {
                                         </div>
 
                                         {/* Footer - Fixed at bottom of modal */}
-                                        <div className="p-4 sm:p-6 border-t border-gray-100 bg-gray-50 shrink-0 flex justify-end gap-3 z-10">
+                                        <div className="p-4 sm:p-6 border-t border-gray-100 bg-gray-50 shrink-0 flex flex-col-reverse sm:flex-row sm:justify-end gap-3 z-20">
                                             <button
-                                                onClick={() => setSelectedId(null)}
-                                                className="px-4 sm:px-6 py-2 sm:py-2.5 text-gray-600 font-medium hover:bg-gray-100 rounded-lg transition-colors text-sm sm:text-base"
+                                                type="button"
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    setSelectedId(null);
+                                                }}
+                                                className="w-full sm:w-auto px-4 sm:px-6 py-3 sm:py-2.5 text-gray-600 font-medium hover:bg-gray-100 rounded-lg transition-colors text-sm sm:text-base border border-gray-200 sm:border-transparent"
                                             >
                                                 Cerrar
                                             </button>
@@ -185,7 +193,8 @@ export default function UseCases() {
                                                 href="https://wa.me/543794267780"
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                className="px-4 sm:px-6 py-2 sm:py-2.5 bg-gray-900 text-white font-medium rounded-lg hover:bg-gray-800 transition-colors shadow-lg hover:shadow-xl flex items-center gap-2 text-sm sm:text-base"
+                                                onClick={(e) => e.stopPropagation()}
+                                                className="w-full sm:w-auto px-4 sm:px-6 py-3 sm:py-2.5 bg-gray-900 text-white font-medium rounded-lg hover:bg-gray-800 transition-colors shadow-lg hover:shadow-xl flex items-center justify-center gap-2 text-sm sm:text-base"
                                             >
                                                 <span>Solicitar Demo</span>
                                                 <ArrowRight className="w-4 h-4" />
