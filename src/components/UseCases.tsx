@@ -5,6 +5,32 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { casosUso, CasoUso } from '@/data/casosUso';
 
+const getColorClass = (color: string) => {
+    switch (color) {
+        case 'blue': return 'bg-blue-50 text-blue-600 border-blue-200 hover:border-blue-300';
+        case 'orange': return 'bg-orange-50 text-orange-600 border-orange-200 hover:border-orange-300';
+        case 'green': return 'bg-green-50 text-green-600 border-green-200 hover:border-green-300';
+        case 'purple': return 'bg-purple-50 text-purple-600 border-purple-200 hover:border-purple-300';
+        case 'yellow': return 'bg-yellow-50 text-yellow-600 border-yellow-200 hover:border-yellow-300';
+        case 'rose': return 'bg-rose-50 text-rose-600 border-rose-200 hover:border-rose-300';
+        case 'slate': return 'bg-slate-50 text-slate-600 border-slate-200 hover:border-slate-300';
+        default: return 'bg-gray-50 text-gray-600 border-gray-200 hover:border-gray-300';
+    }
+};
+
+const getIconBg = (color: string) => {
+    switch (color) {
+        case 'blue': return 'bg-blue-100 text-blue-600';
+        case 'orange': return 'bg-orange-100 text-orange-600';
+        case 'green': return 'bg-green-100 text-green-600';
+        case 'purple': return 'bg-purple-100 text-purple-600';
+        case 'yellow': return 'bg-yellow-100 text-yellow-600';
+        case 'rose': return 'bg-rose-100 text-rose-600';
+        case 'slate': return 'bg-slate-100 text-slate-600';
+        default: return 'bg-gray-100 text-gray-600';
+    }
+};
+
 export default function UseCases() {
     const [selectedId, setSelectedId] = useState<string | null>(null);
 
@@ -20,34 +46,8 @@ export default function UseCases() {
         };
     }, [selectedId]);
 
-    const getColorClass = (color: string) => {
-        switch (color) {
-            case 'blue': return 'bg-blue-50 text-blue-600 border-blue-200 hover:border-blue-300';
-            case 'orange': return 'bg-orange-50 text-orange-600 border-orange-200 hover:border-orange-300';
-            case 'green': return 'bg-green-50 text-green-600 border-green-200 hover:border-green-300';
-            case 'purple': return 'bg-purple-50 text-purple-600 border-purple-200 hover:border-purple-300';
-            case 'yellow': return 'bg-yellow-50 text-yellow-600 border-yellow-200 hover:border-yellow-300';
-            case 'rose': return 'bg-rose-50 text-rose-600 border-rose-200 hover:border-rose-300';
-            case 'slate': return 'bg-slate-50 text-slate-600 border-slate-200 hover:border-slate-300';
-            default: return 'bg-gray-50 text-gray-600 border-gray-200 hover:border-gray-300';
-        }
-    };
-
-    const getIconBg = (color: string) => {
-        switch (color) {
-            case 'blue': return 'bg-blue-100 text-blue-600';
-            case 'orange': return 'bg-orange-100 text-orange-600';
-            case 'green': return 'bg-green-100 text-green-600';
-            case 'purple': return 'bg-purple-100 text-purple-600';
-            case 'yellow': return 'bg-yellow-100 text-yellow-600';
-            case 'rose': return 'bg-rose-100 text-rose-600';
-            case 'slate': return 'bg-slate-100 text-slate-600';
-            default: return 'bg-gray-100 text-gray-600';
-        }
-    };
-
     return (
-        <section className="py-20 bg-white relative overflow-hidden">
+        <section className="py-16 md:py-24 bg-white relative overflow-hidden">
             {/* Background decoration */}
             <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-gray-50 to-transparent pointer-events-none" />
 

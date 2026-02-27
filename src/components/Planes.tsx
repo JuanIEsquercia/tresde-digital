@@ -46,7 +46,7 @@ const plans = [
 
 export default function Planes() {
     return (
-        <section id="planes" className="py-32 relative overflow-hidden bg-white">
+        <section id="planes" className="py-16 md:py-24 lg:py-32 relative overflow-hidden bg-white">
             {/* Background decoration */}
             <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-500/5 rounded-full blur-[120px] -mr-64 -mt-64"></div>
             <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-400/5 rounded-full blur-[120px] -ml-64 -mb-64"></div>

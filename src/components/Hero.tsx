@@ -26,9 +26,9 @@ export default function Hero() {
           {/* Línea decorativa superior */}
           <div className="w-24 h-px bg-gradient-to-r from-transparent via-blue-400 to-transparent mb-8 mx-auto"></div>
 
-          <h1 className="text-5xl sm:text-6xl lg:text-8xl font-bold text-white leading-[1.1] tracking-tight">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold text-white leading-[1.1] tracking-tighter sm:tracking-tight">
             <span className="block font-extralight text-gray-400">Recorridos</span>
-            <span className="block bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-blue-500 to-blue-200 py-2">
+            <span className="block bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-blue-500 to-blue-200 py-2 pb-1">
               Virtuales 360
             </span>
           </h1>
@@ -40,7 +40,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-lg sm:text-2xl text-gray-400 max-w-2xl mx-auto leading-relaxed font-light"
+            className="text-base sm:text-lg md:text-2xl text-gray-400 max-w-2xl mx-auto leading-relaxed font-light px-2 sm:px-0"
           >
             Transformamos espacios físicos en experiencias digitales <span className="text-white font-normal">inmersivas de ultra-alta definición</span>. Innovación visual para tu negocio.
           </motion.p>
@@ -80,7 +80,7 @@ export default function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1, delay: 1.2 }}
-        className="absolute bottom-12 left-1/2 transform -translate-x-1/2 z-20"
+        className="absolute bottom-12 left-1/2 transform -translate-x-1/2 z-20 hidden sm:block"
       >
         <motion.div
           animate={{ y: [0, 8, 0] }}

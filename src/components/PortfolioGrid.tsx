@@ -10,7 +10,7 @@ export default function PortfolioGrid() {
   const { gemelos, isLoading } = useGemelos();
   const router = useRouter();
   return (
-    <section className="py-20 bg-gray-50 min-h-screen">
+    <section className="py-16 md:py-24 bg-gray-50 min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -23,7 +23,7 @@ export default function PortfolioGrid() {
             Nuestros <span className="font-medium text-blue-600">Proyectos</span>
           </h1>
           <p className="text-lg text-gray-700 max-w-3xl mx-auto leading-relaxed">
-            Explora nuestra colección de recorridos virtuales 360. Cada proyecto representa 
+            Explora nuestra colección de recorridos virtuales 360. Cada proyecto representa
             un espacio único capturado con la máxima calidad y detalle profesional.
           </p>
         </motion.div>
@@ -53,8 +53,8 @@ export default function PortfolioGrid() {
               ¿Necesitas un recorrido virtual 360 para tu proyecto?
             </h2>
             <p className="text-gray-700 mb-6 text-lg">
-              Trabajamos con propiedades residenciales, comerciales e industriales. 
-              Cada recorrido virtual 360 se crea con tecnología de última generación 
+              Trabajamos con propiedades residenciales, comerciales e industriales.
+              Cada recorrido virtual 360 se crea con tecnología de última generación
               para garantizar la máxima calidad y precisión.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
