@@ -2,12 +2,14 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -21,10 +23,13 @@ export default function Header() {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const isHome = pathname === '/';
+  const isDarkText = scrolled || !isHome;
+
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'glass-header py-2' : 'bg-transparent py-4'
-        }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'glass-header py-2' : (isHome ? 'bg-transparent py-4' : 'glass-header py-4')}
+        `}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
@@ -32,7 +37,7 @@ export default function Header() {
           <div className="flex-shrink-0">
             <Link href="/" className="block">
               <h1 className="text-xl font-bold tracking-tight">
-                <span className={scrolled ? 'text-gray-900' : 'text-white'}>TresDe</span>
+                <span className={isDarkText ? 'text-gray-900' : 'text-white'}>TresDe</span>
                 <span className="text-blue-500"> Digital</span>
               </h1>
             </Link>
@@ -45,7 +50,7 @@ export default function Header() {
                 <a
                   key={item}
                   href={item === 'Portfolio' ? '/portfolio' : `#${item.toLowerCase()}`}
-                  className={`text-sm font-medium transition-all duration-200 hover:text-blue-500 relative group ${scrolled ? 'text-gray-700' : 'text-white/90'
+                  className={`text-sm font-medium transition-all duration-200 hover:text-blue-500 relative group ${isDarkText ? 'text-gray-700' : 'text-white/90'
                     }`}
                 >
                   {item}
@@ -59,7 +64,7 @@ export default function Header() {
           <div className="md:hidden">
             <button
               onClick={toggleMenu}
-              className={`p-3 rounded-lg transition-colors ${scrolled ? 'text-gray-900 hover:bg-gray-100' : 'text-white hover:bg-white/10'
+              className={`p-3 rounded-lg transition-colors ${isDarkText ? 'text-gray-900 hover:bg-gray-100' : 'text-white hover:bg-white/10'
                 }`}
               aria-label="Toggle menu"
             >
