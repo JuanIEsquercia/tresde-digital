@@ -27,7 +27,7 @@ export async function PUT(
       }, { status: 400 });
     }
 
-    const { titulo, descripcion, iframe, ubicacion, thumbnailUrl } = validation.data;
+    const { titulo, descripcion, iframe, ubicacion, thumbnailUrl, cliente, industria } = validation.data;
 
     // Actualizar en Firestore
     const db = getDb();
@@ -37,6 +37,8 @@ export async function PUT(
       iframe,
       ubicacion: ubicacion || '',
       thumbnailUrl: thumbnailUrl || '',
+      cliente: cliente || '',
+      industria: industria || '',
       updatedAt: new Date().toISOString()
     });
 
@@ -46,7 +48,9 @@ export async function PUT(
       descripcion,
       iframe,
       ubicacion,
-      thumbnailUrl
+      thumbnailUrl,
+      cliente,
+      industria
     };
 
     return NextResponse.json({ success: true, gemelo: gemeloActualizado });

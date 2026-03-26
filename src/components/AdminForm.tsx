@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { Save, X, Edit, Trash2, Upload } from 'lucide-react';
-import { GemeloDigital } from '@/data/gemelos';
+import { GemeloDigital, INDUSTRIAS } from '@/data/gemelos';
 
 interface AdminFormProps {
   gemelos: GemeloDigital[];
@@ -17,7 +17,9 @@ export default function AdminForm({ gemelos, onRefresh }: AdminFormProps) {
     descripcion: '',
     iframe: '',
     ubicacion: '',
-    thumbnailUrl: ''
+    thumbnailUrl: '',
+    cliente: '',
+    industria: ''
   });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
@@ -32,7 +34,9 @@ export default function AdminForm({ gemelos, onRefresh }: AdminFormProps) {
       descripcion: '',
       iframe: '',
       ubicacion: '',
-      thumbnailUrl: ''
+      thumbnailUrl: '',
+      cliente: '',
+      industria: ''
     });
     setIsEditing(false);
     setEditingId(null);
@@ -48,7 +52,9 @@ export default function AdminForm({ gemelos, onRefresh }: AdminFormProps) {
       descripcion: gemelo.descripcion,
       iframe: gemelo.iframe,
       ubicacion: gemelo.ubicacion || '',
-      thumbnailUrl: gemelo.thumbnailUrl || ''
+      thumbnailUrl: gemelo.thumbnailUrl || '',
+      cliente: gemelo.cliente || '',
+      industria: gemelo.industria || ''
     });
     setIsEditing(true);
     setEditingId(gemelo.id);
@@ -213,6 +219,37 @@ export default function AdminForm({ gemelos, onRefresh }: AdminFormProps) {
                 onChange={(e) => setFormData({ ...formData, titulo: e.target.value })}
                 placeholder="Ej: Casa Moderna"
               />
+            </div>
+
+            <div>
+              <label htmlFor="cliente" className="block text-sm font-medium text-gray-700 mb-1">
+                Cliente / Empresa
+              </label>
+              <input
+                type="text"
+                id="cliente"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                value={formData.cliente}
+                onChange={(e) => setFormData({ ...formData, cliente: e.target.value })}
+                placeholder="Ej: Roldán Propiedades"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="industria" className="block text-sm font-medium text-gray-700 mb-1">
+                Industria / Vertical
+              </label>
+              <select
+                id="industria"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white"
+                value={formData.industria}
+                onChange={(e) => setFormData({ ...formData, industria: e.target.value })}
+              >
+                <option value="">— Sin categoría —</option>
+                {INDUSTRIAS.map((ind) => (
+                  <option key={ind.value} value={ind.value}>{ind.label}</option>
+                ))}
+              </select>
             </div>
 
             <div>

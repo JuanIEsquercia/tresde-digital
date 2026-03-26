@@ -1,11 +1,22 @@
 import { z } from 'zod';
 
+const industriaEnum = z.enum([
+  'inmobiliarias',
+  'airbnb',
+  'comercios',
+  'industria',
+  'educacion',
+  'otro',
+]);
+
 export const gemeloSchema = z.object({
   titulo: z.string().min(1, 'El título es requerido'),
   descripcion: z.string().min(1, 'La descripción es requerida'),
   iframe: z.string().min(10, 'El código del iframe es requerido').includes('<iframe', { message: 'Debe contener una etiqueta iframe' }),
   ubicacion: z.string().optional(),
   thumbnailUrl: z.string().url('Debe ser una URL válida').optional().or(z.literal('')),
+  cliente: z.string().optional(),
+  industria: industriaEnum.optional(),
 });
 
 export const marcaSchema = z.object({

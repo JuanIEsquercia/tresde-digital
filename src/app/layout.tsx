@@ -4,8 +4,8 @@ import WhatsAppButton from "@/components/WhatsAppButton";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 
 export const metadata: Metadata = {
-  title: "TresDe Digital - Recorridos Virtuales 360 de Alta Calidad",
-  description: "Transformamos espacios reales en experiencias digitales inmersivas. Especialistas en recorridos virtuales 360 para propiedades residenciales, comerciales e industriales en Corrientes, Argentina.",
+  title: "TresDe Digital | Recorridos Virtuales 360° en Corrientes, Argentina",
+  description: "Transformamos espacios físicos en experiencias digitales inmersivas. Tours virtuales 360° para inmobiliarias, hoteles, comercios e industria en Corrientes y toda Argentina.",
   keywords: "recorridos virtuales 360, matterport, realidad virtual, propiedades, inmobiliaria, arquitectura, corrientes, argentina, tours virtuales, 3d",
   authors: [{ name: "TresDe Digital" }],
   creator: "TresDe Digital",
@@ -17,18 +17,18 @@ export const metadata: Metadata = {
 
   // Open Graph para redes sociales
   openGraph: {
-    title: "TresDe Digital - Recorridos Virtuales 360 de Alta Calidad",
-    description: "🏠 Transformamos espacios reales en experiencias digitales inmersivas. Explora propiedades como si estuvieras ahí. 📍 Corrientes, Argentina",
+    title: "TresDe Digital | Recorridos Virtuales 360° en Corrientes, Argentina",
+    description: "Transformamos espacios físicos en experiencias digitales inmersivas. Tours virtuales 360° para inmobiliarias, hoteles, comercios e industria en Corrientes y toda Argentina.",
     type: "website",
     locale: "es_AR",
     url: "https://tresde.site",
     siteName: "TresDe Digital",
     images: [
       {
-        url: "/og-image.svg",
+        url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "TresDe Digital - Recorridos Virtuales 360 de Alta Calidad",
+        alt: "TresDe Digital | Recorridos Virtuales 360° en Corrientes, Argentina",
       },
     ],
   },
@@ -36,9 +36,9 @@ export const metadata: Metadata = {
   // Twitter/X Card
   twitter: {
     card: "summary_large_image",
-    title: "TresDe Digital - Recorridos Virtuales 360",
-    description: "🏠 Transformamos espacios reales en experiencias digitales inmersivas. Explora propiedades como si estuvieras ahí.",
-    images: ["/og-image.svg"],
+    title: "TresDe Digital | Recorridos Virtuales 360° en Corrientes, Argentina",
+    description: "Transformamos espacios físicos en experiencias digitales inmersivas. Tours virtuales 360° para inmobiliarias, hoteles, comercios e industria en Corrientes y toda Argentina.",
+    images: ["/og-image.png"],
     creator: "@tresde_digital",
   },
 

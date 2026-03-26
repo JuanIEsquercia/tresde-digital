@@ -1,3 +1,20 @@
+export type IndustriaVertical =
+  | 'inmobiliarias'
+  | 'airbnb'
+  | 'comercios'
+  | 'industria'
+  | 'educacion'
+  | 'otro';
+
+export const INDUSTRIAS: { value: IndustriaVertical; label: string }[] = [
+  { value: 'inmobiliarias', label: 'Inmobiliarias' },
+  { value: 'airbnb',        label: 'Airbnb / Alquileres' },
+  { value: 'comercios',     label: 'Comercios' },
+  { value: 'industria',     label: 'Industria' },
+  { value: 'educacion',     label: 'Educación' },
+  { value: 'otro',          label: 'Otro' },
+];
+
 export interface GemeloDigital {
   id: string;
   titulo: string;
@@ -6,6 +23,10 @@ export interface GemeloDigital {
   fecha: string;
   ubicacion?: string;
   thumbnailUrl?: string;
+  /** Nombre del cliente / empresa */
+  cliente?: string;
+  /** Vertical de negocio para filtrado */
+  industria?: IndustriaVertical;
 }
 
 export const gemelosDigitales: GemeloDigital[] = [
@@ -37,7 +58,7 @@ export const gemelosDigitales: GemeloDigital[] = [
 
 export const datosContacto = {
   telefono: "+54 9 3794 267780",
-  email: "jiesquercia@gmail.com",
+  email: "info@tresde.site",
   instagram: "@tresde_digital",
   linkedin: "linkedin.com/in/tresde"
 };

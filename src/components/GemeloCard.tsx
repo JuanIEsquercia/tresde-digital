@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import { ExternalLink, MapPin, Calendar, ArrowUpRight } from 'lucide-react';
+import { ExternalLink, MapPin, Calendar, ArrowUpRight, Building2 } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { GemeloDigital } from '@/data/gemelos';
@@ -89,11 +89,20 @@ export default function GemeloCard({ gemelo, index }: GemeloCardProps) {
 
             {/* Meta Information */}
             <div className="flex items-center justify-between pt-6 border-t border-gray-100/50">
-              <div className="flex items-center text-xs text-gray-400">
-                <MapPin className="w-4 h-4 mr-2 text-blue-500" />
-                {gemelo.ubicacion || 'Corrientes, AR'}
+              <div className="flex items-center text-xs text-gray-400 min-w-0">
+                {gemelo.cliente ? (
+                  <>
+                    <Building2 className="w-4 h-4 mr-2 text-blue-500 flex-shrink-0" />
+                    <span className="truncate">{gemelo.cliente}</span>
+                  </>
+                ) : (
+                  <>
+                    <MapPin className="w-4 h-4 mr-2 text-blue-500 flex-shrink-0" />
+                    <span className="truncate">{gemelo.ubicacion || 'Corrientes, AR'}</span>
+                  </>
+                )}
               </div>
-              <div className="flex items-center text-xs text-gray-400">
+              <div className="flex items-center text-xs text-gray-400 flex-shrink-0 ml-2">
                 <Calendar className="w-4 h-4 mr-2 text-blue-500" />
                 {new Date(gemelo.fecha).getFullYear()}
               </div>

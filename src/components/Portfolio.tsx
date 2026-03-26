@@ -1,21 +1,33 @@
 'use client';
 
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import GemeloCard from './GemeloCard';
 import { useGemelos } from '@/hooks/useGemelos';
+import { INDUSTRIAS, type IndustriaVertical } from '@/data/gemelos';
 
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: {
-      staggerChildren: 0.1
-    }
+    transition: { staggerChildren: 0.1 }
   }
 };
 
+type Filtro = IndustriaVertical | 'todas';
+
+const FILTROS: { value: Filtro; label: string }[] = [
+  { value: 'todas', label: 'Todas' },
+  ...INDUSTRIAS,
+];
+
 export default function Portfolio() {
   const { gemelos, isLoading } = useGemelos();
+  const [filtroActivo, setFiltroActivo] = useState<Filtro>('todas');
+
+  const gemelosFiltrados = filtroActivo === 'todas'
+    ? gemelos
+    : gemelos.filter((g) => g.industria === filtroActivo);
 
   return (
     <section id="portfolio" className="py-32 bg-gray-50/50">
@@ -42,6 +54,31 @@ export default function Portfolio() {
           </p>
         </motion.div>
 
+        {/* Chips de filtro */}
+        {!isLoading && (
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
+            className="flex flex-wrap justify-center gap-2 mb-16"
+          >
+            {FILTROS.map((f) => (
+              <button
+                key={f.value}
+                onClick={() => setFiltroActivo(f.value)}
+                className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-200 border ${
+                  filtroActivo === f.value
+                    ? 'bg-blue-600 text-white border-blue-600 shadow-md'
+                    : 'bg-white text-gray-600 border-gray-200 hover:border-blue-300 hover:text-blue-600'
+                }`}
+              >
+                {f.label}
+              </button>
+            ))}
+          </motion.div>
+        )}
+
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -53,8 +90,12 @@ export default function Portfolio() {
             Array.from({ length: 6 }).map((_, i) => (
               <div key={i} className="aspect-[4/3] bg-gray-200 animate-pulse rounded-[2rem]"></div>
             ))
+          ) : gemelosFiltrados.length === 0 ? (
+            <div className="col-span-full text-center py-16 text-gray-400">
+              No hay proyectos en esta categoría aún.
+            </div>
           ) : (
-            gemelos.slice(0, 12).map((gemelo, index) => (
+            gemelosFiltrados.slice(0, 12).map((gemelo, index) => (
               <GemeloCard key={gemelo.id} gemelo={gemelo} index={index} />
             ))
           )}
